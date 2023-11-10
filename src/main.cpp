@@ -54,15 +54,15 @@ auto main() -> int {
         glViewport(0, 0, width, height);
       });
 
-  ShaderProgram shader_program("resources/shaders/simple_cube_vertex.glsl",
-                               "resources/shaders/simple_cube_fragment.glsl");
-  shader_program.Activate();
-
   std::vector<float> vertices{
       -0.5f, -0.5f, 0.0f, //
       0.5f,  -0.5f, 0.0f, //
       0.0f,  0.5f,  0.0f  //
   };
+
+  ShaderProgram shader_program("resources/shaders/simple_cube_vertex.glsl",
+                               "resources/shaders/simple_cube_fragment.glsl");
+  shader_program.Activate();
 
   VAO instance_vao;
   VBO triangle_vbo(vertices.size() * sizeof(vertices[0]), vertices.data());
