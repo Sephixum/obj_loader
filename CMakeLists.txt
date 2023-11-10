@@ -15,7 +15,8 @@ project(
 add_subdirectory(deps/)
 
 add_executable(output)
-target_sources(output PRIVATE src/main.cpp src/ShaderProgram.cpp)
+target_sources(output PRIVATE src/main.cpp src/ShaderProgram.cpp src/VBO.cpp
+                              src/VAO.cpp)
 target_link_libraries(output PRIVATE glfw glad)
 target_include_directories(output PRIVATE include/)
 

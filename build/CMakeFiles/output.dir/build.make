@@ -97,20 +97,52 @@ CMakeFiles/output.dir/src/ShaderProgram.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/output.dir/src/ShaderProgram.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/ShaderProgram.cpp -o CMakeFiles/output.dir/src/ShaderProgram.cpp.s
 
+CMakeFiles/output.dir/src/VBO.cpp.o: CMakeFiles/output.dir/flags.make
+CMakeFiles/output.dir/src/VBO.cpp.o: /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VBO.cpp
+CMakeFiles/output.dir/src/VBO.cpp.o: CMakeFiles/output.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/output.dir/src/VBO.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/output.dir/src/VBO.cpp.o -MF CMakeFiles/output.dir/src/VBO.cpp.o.d -o CMakeFiles/output.dir/src/VBO.cpp.o -c /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VBO.cpp
+
+CMakeFiles/output.dir/src/VBO.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/output.dir/src/VBO.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VBO.cpp > CMakeFiles/output.dir/src/VBO.cpp.i
+
+CMakeFiles/output.dir/src/VBO.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/output.dir/src/VBO.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VBO.cpp -o CMakeFiles/output.dir/src/VBO.cpp.s
+
+CMakeFiles/output.dir/src/VAO.cpp.o: CMakeFiles/output.dir/flags.make
+CMakeFiles/output.dir/src/VAO.cpp.o: /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VAO.cpp
+CMakeFiles/output.dir/src/VAO.cpp.o: CMakeFiles/output.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/output.dir/src/VAO.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/output.dir/src/VAO.cpp.o -MF CMakeFiles/output.dir/src/VAO.cpp.o.d -o CMakeFiles/output.dir/src/VAO.cpp.o -c /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VAO.cpp
+
+CMakeFiles/output.dir/src/VAO.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/output.dir/src/VAO.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VAO.cpp > CMakeFiles/output.dir/src/VAO.cpp.i
+
+CMakeFiles/output.dir/src/VAO.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/output.dir/src/VAO.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VAO.cpp -o CMakeFiles/output.dir/src/VAO.cpp.s
+
 # Object files for target output
 output_OBJECTS = \
 "CMakeFiles/output.dir/src/main.cpp.o" \
-"CMakeFiles/output.dir/src/ShaderProgram.cpp.o"
+"CMakeFiles/output.dir/src/ShaderProgram.cpp.o" \
+"CMakeFiles/output.dir/src/VBO.cpp.o" \
+"CMakeFiles/output.dir/src/VAO.cpp.o"
 
 # External object files for target output
 output_EXTERNAL_OBJECTS =
 
 output: CMakeFiles/output.dir/src/main.cpp.o
 output: CMakeFiles/output.dir/src/ShaderProgram.cpp.o
+output: CMakeFiles/output.dir/src/VBO.cpp.o
+output: CMakeFiles/output.dir/src/VAO.cpp.o
 output: CMakeFiles/output.dir/build.make
 output: deps/glad/libglad.a
 output: CMakeFiles/output.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable output"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable output"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/output.dir/link.txt --verbose=$(VERBOSE)
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold "Copying shaders and textures to binary directory"
 	/usr/bin/cmake -E copy_directory_if_different /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/resources /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/resources

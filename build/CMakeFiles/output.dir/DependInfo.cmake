@@ -9,6 +9,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/ShaderProgram.cpp" "CMakeFiles/output.dir/src/ShaderProgram.cpp.o" "gcc" "CMakeFiles/output.dir/src/ShaderProgram.cpp.o.d"
+  "/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VAO.cpp" "CMakeFiles/output.dir/src/VAO.cpp.o" "gcc" "CMakeFiles/output.dir/src/VAO.cpp.o.d"
+  "/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VBO.cpp" "CMakeFiles/output.dir/src/VBO.cpp.o" "gcc" "CMakeFiles/output.dir/src/VBO.cpp.o.d"
   "/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/main.cpp" "CMakeFiles/output.dir/src/main.cpp.o" "gcc" "CMakeFiles/output.dir/src/main.cpp.o.d"
   )
 

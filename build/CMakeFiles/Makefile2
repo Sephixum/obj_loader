@@ -113,12 +113,12 @@ deps/glad/clean: deps/glad/CMakeFiles/glad.dir/clean
 CMakeFiles/output.dir/all: deps/glad/CMakeFiles/glad.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/output.dir/build.make CMakeFiles/output.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/output.dir/build.make CMakeFiles/output.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/CMakeFiles --progress-num=3,4,5 "Built target output"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/CMakeFiles --progress-num=3,4,5,6,7 "Built target output"
 .PHONY : CMakeFiles/output.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/output.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/CMakeFiles 7
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/output.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/CMakeFiles 0
 .PHONY : CMakeFiles/output.dir/rule

@@ -343,6 +343,8 @@ CMakeFiles/output.dir/src/main.cpp.o: \
  /usr/include/glm/ext/vector_uint1_sized.hpp \
  /usr/include/c++/13.2.1/cstring /usr/include/string.h \
  /usr/include/strings.h /usr/include/glm/gtc/type_ptr.inl \
+ /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/include/VAO.hpp \
+ /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/include/VBO.hpp \
  /usr/include/GLFW/glfw3.h /usr/include/c++/13.2.1/vector \
  /usr/include/c++/13.2.1/bits/stl_uninitialized.h \
  /usr/include/c++/13.2.1/bits/stl_vector.h \

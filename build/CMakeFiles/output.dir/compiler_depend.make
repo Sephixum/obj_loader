@@ -428,10 +428,59 @@ CMakeFiles/output.dir/src/ShaderProgram.cpp.o: /home/sephix/Documents/C++Related
   /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stdint.h
 
+CMakeFiles/output.dir/src/VAO.cpp.o: /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VAO.cpp \
+  /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/deps/glad/include/KHR/khrplatform.h \
+  /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/deps/glad/include/glad/glad.h \
+  /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/include/VAO.hpp \
+  /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/include/VBO.hpp \
+  /usr/include/bits/libc-header-start.h \
+  /usr/include/bits/long-double.h \
+  /usr/include/bits/stdint-intn.h \
+  /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/time64.h \
+  /usr/include/bits/timesize.h \
+  /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h \
+  /usr/include/bits/wchar.h \
+  /usr/include/bits/wordsize.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/gnu/stubs-64.h \
+  /usr/include/gnu/stubs.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stdint.h
+
+CMakeFiles/output.dir/src/VBO.cpp.o: /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VBO.cpp \
+  /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/deps/glad/include/KHR/khrplatform.h \
+  /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/deps/glad/include/glad/glad.h \
+  /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/include/VBO.hpp \
+  /usr/include/bits/libc-header-start.h \
+  /usr/include/bits/long-double.h \
+  /usr/include/bits/stdint-intn.h \
+  /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/time64.h \
+  /usr/include/bits/timesize.h \
+  /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h \
+  /usr/include/bits/wchar.h \
+  /usr/include/bits/wordsize.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/gnu/stubs-64.h \
+  /usr/include/gnu/stubs.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stdint.h
+
 CMakeFiles/output.dir/src/main.cpp.o: /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/main.cpp \
   /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/deps/glad/include/KHR/khrplatform.h \
   /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/deps/glad/include/glad/glad.h \
   /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/include/ShaderProgram.hpp \
+  /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/include/VAO.hpp \
+  /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/include/VBO.hpp \
   /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/include/globals.hpp \
   /usr/include/GLFW/glfw3.h \
   /usr/include/alloca.h \
@@ -866,6 +915,8 @@ CMakeFiles/output.dir/src/main.cpp.o: /home/sephix/Documents/C++Related/OpenGL/P
 
 /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/main.cpp:
 
+/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/include/VBO.hpp:
+
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stdint.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stdarg.h:
@@ -959,6 +1010,8 @@ CMakeFiles/output.dir/src/main.cpp.o: /home/sephix/Documents/C++Related/OpenGL/P
 /usr/include/glm/matrix.hpp:
 
 /usr/include/glm/ext/vector_bool3.hpp:
+
+/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/include/VAO.hpp:
 
 /usr/include/glm/ext/vector_bool2.hpp:
 
@@ -1214,6 +1267,8 @@ CMakeFiles/output.dir/src/main.cpp.o: /home/sephix/Documents/C++Related/OpenGL/P
 
 /usr/include/bits/waitflags.h:
 
+/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VAO.cpp:
+
 /usr/include/ctype.h:
 
 /usr/include/c++/13.2.1/bits/hash_bytes.h:
@@ -1385,6 +1440,8 @@ CMakeFiles/output.dir/src/main.cpp.o: /home/sephix/Documents/C++Related/OpenGL/P
 /usr/include/bits/time64.h:
 
 /usr/include/bits/stdlib-float.h:
+
+/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VBO.cpp:
 
 /usr/include/bits/pthread_stack_min-dynamic.h:
 

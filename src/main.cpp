@@ -1,10 +1,11 @@
 #include "ShaderProgram.hpp"
+#include "VAO.hpp"
+#include "VBO.hpp"
 #include "globals.hpp"
 
+#include <GLFW/glfw3.h>
 #include <format>
 #include <glad/glad.h>
-
-#include <GLFW/glfw3.h>
 #include <stdexcept>
 #include <vector>
 
@@ -57,29 +58,21 @@ auto main() -> int {
                                "resources/shaders/simple_cube_fragment.glsl");
   shader_program.Activate();
 
-  std::vector<GLfloat> vertices{
+  std::vector<float> vertices{
       -0.5f, -0.5f, 0.0f, //
       0.5f,  -0.5f, 0.0f, //
       0.0f,  0.5f,  0.0f  //
   };
 
-  GLuint VBO, VAO;
-  glGenVertexArrays(1, &VAO);
-  glGenBuffers(1, &VBO);
-
-  glBindVertexArray(VAO);
-
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices[0]),
-               vertices.data(), GL_STATIC_DRAW);
-
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-  glEnableVertexAttribArray(0);
+  VAO instance_vao;
+  VBO triangle_vbo(vertices.size() * sizeof(vertices[0]), vertices.data());
+  instance_vao.LinkVBO(triangle_vbo, 0, 3, GL_FLOAT, 0, (void *)0);
+  instance_vao.Bind();
 
   while (!glfwWindowShouldClose(window)) {
     ProcessInput(window);
 
-    glClearColor(200 / 255.f, 160 / 255.f, 100 / 255.f, 1.f);
+    glClearColor(150 / 255.f, 100 / 255.f, 120 / 255.f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     /*
@@ -90,6 +83,8 @@ auto main() -> int {
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
+  instance_vao.Delete();
+  triangle_vbo.Delete();
   shader_program.Delete();
 
   glfwTerminate();

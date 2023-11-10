@@ -12,6 +12,18 @@
   "output": "CMakeFiles/output.dir/src/ShaderProgram.cpp.o"
 },
 {
+  "directory": "/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build",
+  "command": "/usr/bin/c++  -I/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/include -I/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/deps/glad/include  -Wall -Wextra -std=gnu++20 -o CMakeFiles/output.dir/src/VBO.cpp.o -c /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VBO.cpp",
+  "file": "/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VBO.cpp",
+  "output": "CMakeFiles/output.dir/src/VBO.cpp.o"
+},
+{
+  "directory": "/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build",
+  "command": "/usr/bin/c++  -I/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/include -I/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/deps/glad/include  -Wall -Wextra -std=gnu++20 -o CMakeFiles/output.dir/src/VAO.cpp.o -c /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VAO.cpp",
+  "file": "/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/src/VAO.cpp",
+  "output": "CMakeFiles/output.dir/src/VAO.cpp.o"
+},
+{
   "directory": "/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/deps/glad",
   "command": "/usr/bin/cc  -I/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/deps/glad/include  -o CMakeFiles/glad.dir/src/glad.c.o -c /home/sephix/Documents/C++Related/OpenGL/Practice/Part1/deps/glad/src/glad.c",
   "file": "/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/deps/glad/src/glad.c",
