@@ -1,0 +1,8 @@
+/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/CMakeFiles/output.dir
+/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/CMakeFiles/edit_cache.dir
+/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/CMakeFiles/rebuild_cache.dir
+/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/deps/CMakeFiles/edit_cache.dir
+/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/deps/CMakeFiles/rebuild_cache.dir
+/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/deps/glad/CMakeFiles/glad.dir
+/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/deps/glad/CMakeFiles/edit_cache.dir
+/home/sephix/Documents/C++Related/OpenGL/Practice/Part1/build/deps/glad/CMakeFiles/rebuild_cache.dir
