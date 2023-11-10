@@ -1,1 +1,0 @@
-/usr/bin/c++  -Wall -Wextra CMakeFiles/output.dir/src/main.cpp.o CMakeFiles/output.dir/src/ShaderProgram.cpp.o CMakeFiles/output.dir/src/VBO.cpp.o CMakeFiles/output.dir/src/VAO.cpp.o -o output  -lglfw deps/glad/libglad.a 
