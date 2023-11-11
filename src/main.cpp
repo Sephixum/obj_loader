@@ -1,4 +1,7 @@
+#include "EBO.hpp"
 #include "ShaderProgram.hpp"
+#include "Texture.hpp"
+#include "Utils.hpp"
 #include "VAO.hpp"
 #include "VBO.hpp"
 #include "globals.hpp"
@@ -9,45 +12,10 @@
 #include <stdexcept>
 #include <vector>
 
-auto CreateGlfwWindow() -> GLFWwindow * {
-  glfwInit();
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-  auto new_window = glfwCreateWindow(kWindow_width, kWindow_height,
-                                     "OpenGL practice", nullptr, nullptr);
-  if (new_window == nullptr) {
-    glfwTerminate();
-    throw std::runtime_error("[GLFW] Failed to create window.");
-  } else if (IS_VERBOSE) {
-    std::puts("[GLFW] Window created with success.");
-  }
-
-  return new_window;
-}
-
-auto LoadOpenGLFunctions() -> void {
-  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-    throw std::runtime_error(
-        "[GLFW] OpenGL functions pointers failed to load.");
-  } else {
-    if (IS_VERBOSE) {
-      std::puts("[GLFW] OpenGL function pointers loaded.");
-    }
-  }
-}
-
-auto ProcessInput(GLFWwindow *target_window) -> void {
-  if (glfwGetKey(target_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-    glfwSetWindowShouldClose(target_window, true);
-  }
-}
-
 auto main() -> int {
-  auto window = CreateGlfwWindow();
+  auto window = fn::CreateGlfwWindow();
   glfwMakeContextCurrent(window);
-  LoadOpenGLFunctions();
+  fn::LoadOpenGLFunctions();
   glViewport(0, 0, kWindow_width, kWindow_height);
   glfwSetFramebufferSizeCallback(
       window, [](GLFWwindow *window, int width, int height) -> void {
@@ -55,9 +23,15 @@ auto main() -> int {
       });
 
   std::vector<float> vertices{
-      -0.5f, -0.5f, 0.0f, //
-      0.5f,  -0.5f, 0.0f, //
-      0.0f,  0.5f,  0.0f  //
+      //    CROORDS     //  TEXCOORDS //
+      -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, //
+      -0.5f, 0.5f,  0.0f, 0.0f, 1.0f, //
+      0.5f,  0.5f,  0.0f, 1.0f, 1.0f, //
+      0.5f,  -0.5f, 0.0f, 1.0f, 0.0f  //
+  };
+  std::vector<unsigned int> indices{
+      0, 1, 3, //
+      1, 2, 3  //
   };
 
   ShaderProgram shader_program("resources/shaders/simple_cube_vertex.glsl",
@@ -65,28 +39,41 @@ auto main() -> int {
   shader_program.Activate();
 
   VAO instance_vao;
-  VBO triangle_vbo(vertices.size() * sizeof(vertices[0]), vertices.data());
-  instance_vao.LinkVBO(triangle_vbo, 0, 3, GL_FLOAT, 0, (void *)0);
+
+  VBO square_vbo(vertices.size() * sizeof(vertices[0]), vertices.data());
+  instance_vao.LinkVBO(square_vbo, 0, 3, GL_FLOAT, 5 * sizeof(float),
+                       (void *)0);
+  instance_vao.LinkVBO(square_vbo, 1, 2, GL_FLOAT, 5 * sizeof(float),
+                       (void *)(3 * sizeof(float)));
   instance_vao.Bind();
 
-  while (!glfwWindowShouldClose(window)) {
-    ProcessInput(window);
+  EBO instance_ebo(indices.size() * sizeof(indices[0]), indices.data());
+  instance_ebo.Bind();
 
-    glClearColor(150 / 255.f, 100 / 255.f, 120 / 255.f, 1.f);
+  Texture red_bricks("resources/textures/red_bricks.png", GL_TEXTURE_2D, 0,
+                     GL_UNSIGNED_BYTE);
+  shader_program.SetTextureUnit("tex0", red_bricks.GetTextureUnit());
+  red_bricks.Activate();
+  red_bricks.Bind();
+
+  glClearColor(150 / 255.f, 100 / 255.f, 120 / 255.f, 1.f);
+  while (!glfwWindowShouldClose(window)) {
+    fn::ProcessInput(window);
+
     glClear(GL_COLOR_BUFFER_BIT);
 
     /*
      * this is where you render.
      */
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
   instance_vao.Delete();
-  triangle_vbo.Delete();
+  square_vbo.Delete();
   shader_program.Delete();
-
   glfwTerminate();
+
   return EXIT_SUCCESS;
 }
