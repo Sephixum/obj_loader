@@ -10,4 +10,5 @@ namespace fn {
 auto CreateGlfwWindow() -> GLFWwindow *;
 auto LoadOpenGLFunctions() -> void;
 auto ProcessInput(GLFWwindow *target_window) -> void;
+auto InitGlfwAndGlad() -> GLFWwindow *;
 } // namespace fn

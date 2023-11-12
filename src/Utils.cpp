@@ -34,3 +34,18 @@ auto fn::ProcessInput(GLFWwindow *target_window) -> void {
     glfwSetWindowShouldClose(target_window, true);
   }
 }
+
+auto fn::InitGlfwAndGlad() -> GLFWwindow * {
+  auto window = fn::CreateGlfwWindow();
+  glfwMakeContextCurrent(window);
+
+  fn::LoadOpenGLFunctions();
+  glViewport(0, 0, kWindow_width, kWindow_height);
+
+  glfwSetFramebufferSizeCallback(
+      window, [](GLFWwindow *window, int width, int height) -> void {
+        glViewport(0, 0, width, height);
+      });
+
+  return window;
+}

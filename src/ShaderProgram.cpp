@@ -18,11 +18,11 @@ auto ShaderProgram::StoreFileToString(const char *file_name) -> std::string {
 
 ShaderProgram::ShaderProgram(const char *vertex_shader_path,
                              const char *fragment_shader_path) {
-  std::string vertex_shader_code{StoreFileToString(vertex_shader_path)};
-  std::string fragment_shader_code{StoreFileToString(fragment_shader_path)};
+  std::string vertex_shader_text{StoreFileToString(vertex_shader_path)};
+  std::string fragment_shader_text{StoreFileToString(fragment_shader_path)};
 
-  auto vertex_shader_source = vertex_shader_code.c_str();
-  auto fragment_shader_source = fragment_shader_code.c_str();
+  auto vertex_shader_source{vertex_shader_text.c_str()};
+  auto fragment_shader_source{fragment_shader_text.c_str()};
 
   int success;
   char info_log[512];

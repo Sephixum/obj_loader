@@ -11,9 +11,11 @@ Texture::Texture(const char *image_path, uint texture_type, uint slot,
                                &number_of_color_channels, 0);
   if (image_bytes) {
     glGenTextures(1, &id_);
-    glActiveTexture(texture_unit_);
-    glBindTexture(texture_type_, id_);
+    Bind();
+    Activate();
 
+    glTexParameteri(texture_type_, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(texture_type_, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(texture_type_, GL_TEXTURE_MIN_FILTER,
                     GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(texture_type_, GL_TEXTURE_MAG_FILTER,
@@ -39,6 +41,9 @@ Texture::Texture(const char *image_path, uint texture_type, uint slot,
 
     stbi_image_free(image_bytes);
     glBindTexture(texture_type_, 0);
+
+    UnBind();
+    DeActivate();
   } else {
     throw std::runtime_error(
         std::format("[TEXTURE] {} could not be loaded.", image_path));

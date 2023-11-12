@@ -4,7 +4,6 @@
 #include "Utils.hpp"
 #include "VAO.hpp"
 #include "VBO.hpp"
-#include "globals.hpp"
 
 #include <GLFW/glfw3.h>
 #include <format>
@@ -13,14 +12,7 @@
 #include <vector>
 
 auto main() -> int {
-  auto window = fn::CreateGlfwWindow();
-  glfwMakeContextCurrent(window);
-  fn::LoadOpenGLFunctions();
-  glViewport(0, 0, kWindow_width, kWindow_height);
-  glfwSetFramebufferSizeCallback(
-      window, [](GLFWwindow *window, int width, int height) -> void {
-        glViewport(0, 0, width, height);
-      });
+  GLFWwindow *window = fn::InitGlfwAndGlad();
 
   std::vector<float> vertices{
       //    CROORDS     //  TEXCOORDS //
@@ -52,9 +44,10 @@ auto main() -> int {
 
   Texture red_bricks("resources/textures/red_bricks.png", GL_TEXTURE_2D, 0,
                      GL_UNSIGNED_BYTE);
-  shader_program.SetTextureUnit("tex0", red_bricks.GetTextureUnit());
   red_bricks.Activate();
   red_bricks.Bind();
+
+  shader_program.SetTextureUnit("tex0", red_bricks.GetTextureUnit());
 
   glClearColor(150 / 255.f, 100 / 255.f, 120 / 255.f, 1.f);
   while (!glfwWindowShouldClose(window)) {
