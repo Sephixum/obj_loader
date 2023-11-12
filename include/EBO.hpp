@@ -1,3 +1,11 @@
+/**
+ * @file EBO.hpp
+ *
+ * @brief A class for Eemeent buffer arrays OpenGL.
+ * every intance of this class has it's own unique
+ * id.
+ *
+ */
 #pragma once
 
 #include <glad/glad.h>

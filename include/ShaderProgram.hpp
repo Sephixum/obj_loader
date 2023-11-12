@@ -1,3 +1,10 @@
+/**
+ * @file ShaderProgram.hpp
+ *
+ * @brief This class represents an id for a
+ * shader program.
+ *
+ */
 #pragma once
 
 #include "globals.hpp"

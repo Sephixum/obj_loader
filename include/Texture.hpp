@@ -1,3 +1,10 @@
+/**
+ * @file Texture.hpp
+ *
+ * @brief This class controlls binding, unbinding and
+ * id for a texture object.
+ * 
+ */
 #pragma once
 
 #include "stb_image.h"

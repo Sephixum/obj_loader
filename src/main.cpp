@@ -19,48 +19,48 @@ auto main() -> int {
   auto window = fn::initGlfwAndGlad();
 
   std::vector<float> vertices{
-      //    CROORDS     //  TEXCOORDS //
-      -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, //
-      0.5f, -0.5f, -0.5f, 1.0f, 0.0f,  //
-      0.5f, 0.5f, -0.5f, 1.0f, 1.0f,   //
-      0.5f, 0.5f, -0.5f, 1.0f, 1.0f,   //
-      -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,  //
-      -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, //
-                                       //
-      -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,  //
-      0.5f, -0.5f, 0.5f, 1.0f, 0.0f,   //
-      0.5f, 0.5f, 0.5f, 1.0f, 1.0f,    //
-      0.5f, 0.5f, 0.5f, 1.0f, 1.0f,    //
-      -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,   //
-      -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,  //
-                                       //
-      -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,   //
-      -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,  //
-      -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, //
-      -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, //
-      -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,  //
-      -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,   //
-                                       //
-      0.5f, 0.5f, 0.5f, 1.0f, 0.0f,    //
-      0.5f, 0.5f, -0.5f, 1.0f, 1.0f,   //
-      0.5f, -0.5f, -0.5f, 0.0f, 1.0f,  //
-      0.5f, -0.5f, -0.5f, 0.0f, 1.0f,  //
-      0.5f, -0.5f, 0.5f, 0.0f, 0.0f,   //
-      0.5f, 0.5f, 0.5f, 1.0f, 0.0f,    //
-                                       //
-      -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, //
-      0.5f, -0.5f, -0.5f, 1.0f, 1.0f,  //
-      0.5f, -0.5f, 0.5f, 1.0f, 0.0f,   //
-      0.5f, -0.5f, 0.5f, 1.0f, 0.0f,   //
-      -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,  //
-      -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, //
-                                       //
-      -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,  //
-      0.5f, 0.5f, -0.5f, 1.0f, 1.0f,   //
-      0.5f, 0.5f, 0.5f, 1.0f, 0.0f,    //
-      0.5f, 0.5f, 0.5f, 1.0f, 0.0f,    //
-      -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,   //
-      -0.5f, 0.5f, -0.5f, 0.0f, 1.0f   //
+      //    CROORDS     //  TEXCOORDS  //    NORMALS      //
+      -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, //
+      0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f,  //
+      0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f,   //
+      0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f,   //
+      -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, -1.0f,  //
+      -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, //
+                                                          //
+      -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,   //
+      0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,    //
+      0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,     //
+      0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,     //
+      -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,    //
+      -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,   //
+                                                          //
+      -0.5f, 0.5f, 0.5f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f,   //
+      -0.5f, 0.5f, -0.5f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f,  //
+      -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, //
+      -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, //
+      -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,  //
+      -0.5f, 0.5f, 0.5f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f,   //
+                                                          //
+      0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,     //
+      0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,    //
+      0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,   //
+      0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,   //
+      0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,    //
+      0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,     //
+                                                          //
+      -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, -1.0f, 0.0f, //
+      0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f, -1.0f, 0.0f,  //
+      0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f,   //
+      0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f,   //
+      -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f,  //
+      -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, -1.0f, 0.0f, //
+                                                          //
+      -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,   //
+      0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,    //
+      0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,     //
+      0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,     //
+      -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,    //
+      -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f    //
 
   };
   // std::vector<unsigned int> indices{
@@ -69,16 +69,18 @@ auto main() -> int {
   // };
 
   ShaderProgram cube_shader_program(
-      "resources/shaders/simple_cube_vertex.glsl",
-      "resources/shaders/simple_cube_fragment.glsl");
+      "resources/shaders/cube_shaders/cube_vertex.glsl",
+      "resources/shaders/cube_shaders/cube_fragment.glsl");
   cube_shader_program.activate();
 
   VAO instance_vao;
 
   VBO cube_vbo(vertices.size() * sizeof(vertices[0]), vertices.data());
-  instance_vao.linkVBO(cube_vbo, 0, 3, GL_FLOAT, 5 * sizeof(float), (void *)0);
-  instance_vao.linkVBO(cube_vbo, 1, 2, GL_FLOAT, 5 * sizeof(float),
+  instance_vao.linkVBO(cube_vbo, 0, 3, GL_FLOAT, 8 * sizeof(float), (void *)0);
+  instance_vao.linkVBO(cube_vbo, 1, 2, GL_FLOAT, 8 * sizeof(float),
                        (void *)(3 * sizeof(float)));
+  instance_vao.linkVBO(cube_vbo, 2, 3, GL_FLOAT, 8 * sizeof(float),
+                       (void *)(5 * sizeof(float)));
   instance_vao.bind();
 
   // EBO instance_ebo(indices.size() * sizeof(indices[0]), indices.data());

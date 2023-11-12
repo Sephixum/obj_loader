@@ -1,3 +1,11 @@
+/**
+ * @file VAO.hpp
+ *
+ * @brief This class is an OpenGL vertex-
+ * array object that stores an id for one
+ * of these objects.
+ *
+ */
 #pragma once
 
 #include "VBO.hpp"

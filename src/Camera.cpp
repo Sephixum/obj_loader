@@ -66,7 +66,7 @@ auto Camera::keyboardInputProccess_(float delta_time) noexcept -> void {
   }
 }
 
-auto Camera::mouseInputProccess_(float delta_time) noexcept -> void {
+auto Camera::mouseInputProccess_() noexcept -> void {
   if (glfwGetMouseButton(target_window_, GLFW_MOUSE_BUTTON_LEFT) ==
       GLFW_PRESS) {
     glfwSetInputMode(target_window_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -113,5 +113,5 @@ auto Camera::mouseInputProccess_(float delta_time) noexcept -> void {
 
 auto Camera::update(float delta_time) noexcept -> void {
   keyboardInputProccess_(delta_time);
-  mouseInputProccess_(delta_time);
+  mouseInputProccess_();
 }

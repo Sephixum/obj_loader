@@ -1,3 +1,10 @@
+/**
+ * @file Utils.hpp
+ *
+ * @brief Usefull functions in order to
+ * reduce main function's code.
+ * 
+ */
 #pragma once
 
 #include "glad/glad.h"

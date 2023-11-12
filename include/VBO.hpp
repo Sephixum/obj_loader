@@ -1,3 +1,10 @@
+/**
+ * @file VBO.hpp
+ *
+ * @brief This class stores and id for an
+ * OpenGL vertex buffer object.
+ *
+ */
 #pragma once
 
 #include <glad/glad.h>
