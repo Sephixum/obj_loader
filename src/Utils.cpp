@@ -47,5 +47,7 @@ auto fn::InitGlfwAndGlad() -> GLFWwindow * {
         glViewport(0, 0, width, height);
       });
 
+  glEnable(GL_DEPTH_TEST);
+
   return window;
 }

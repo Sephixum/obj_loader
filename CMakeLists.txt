@@ -24,9 +24,10 @@ target_sources(
           src/EBO.cpp
           src/Utils.cpp
           src/stb_image_activator.cpp
-          src/Texture.cpp)
+          src/Texture.cpp
+          src/Camera.cpp)
 target_link_libraries(output PRIVATE glfw glad)
-target_include_directories(output PRIVATE include/)
+target_include_directories(output PRIVATE include/ deps/stb_image/)
 
 add_custom_command(
   TARGET POST_BUILD
