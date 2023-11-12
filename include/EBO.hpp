@@ -9,7 +9,7 @@ private:
 public:
   explicit EBO(signed long int size, unsigned int *indices) noexcept;
 
-  auto Bind() const noexcept -> void;
-  auto UnBind() const noexcept -> void;
-  auto Delete() const noexcept -> void;
+  auto bind() const noexcept -> void;
+  auto unBind() const noexcept -> void;
+  auto deleteBuffer() const noexcept -> void;
 };

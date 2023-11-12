@@ -16,7 +16,7 @@
 #include <vector>
 
 auto main() -> int {
-  auto window = fn::InitGlfwAndGlad();
+  auto window = fn::initGlfwAndGlad();
 
   std::vector<float> vertices{
       //    CROORDS     //  TEXCOORDS //
@@ -70,34 +70,44 @@ auto main() -> int {
 
   ShaderProgram shader_program("resources/shaders/simple_cube_vertex.glsl",
                                "resources/shaders/simple_cube_fragment.glsl");
-  shader_program.Activate();
+  shader_program.activate();
 
   VAO instance_vao;
 
   VBO square_vbo(vertices.size() * sizeof(vertices[0]), vertices.data());
-  instance_vao.LinkVBO(square_vbo, 0, 3, GL_FLOAT, 5 * sizeof(float),
+  instance_vao.linkVBO(square_vbo, 0, 3, GL_FLOAT, 5 * sizeof(float),
                        (void *)0);
-  instance_vao.LinkVBO(square_vbo, 1, 2, GL_FLOAT, 5 * sizeof(float),
+  instance_vao.linkVBO(square_vbo, 1, 2, GL_FLOAT, 5 * sizeof(float),
                        (void *)(3 * sizeof(float)));
-  instance_vao.Bind();
+  instance_vao.bind();
 
   // EBO instance_ebo(indices.size() * sizeof(indices[0]), indices.data());
   // instance_ebo.Bind();
 
   Texture red_bricks("resources/textures/red_bricks.png", GL_TEXTURE_2D, 0,
                      GL_UNSIGNED_BYTE);
-  red_bricks.Activate();
-  red_bricks.Bind();
-  shader_program.SetTextureUnit("tex0", red_bricks.GetTextureUnit());
+  red_bricks.activate();
+  red_bricks.bind();
+  shader_program.setTextureUnit("tex0", red_bricks.getTextureUnit());
 
   Camera instace_camera(kWindow_width / static_cast<float>(kWindow_height),
-                        glm::vec3(0.0f, 0.0f, 2.0f));
-  instace_camera.UpdateCameraMatrix(90.f, 0.1f, 100.f);
-  instace_camera.SetCameraMatrixToShader(shader_program, "camera_matrix");
+                        glm::vec3(0.0f, 0.0f, 2.0f), window);
+
+  float current_time;
+  float delta_time = 0.f;
+  float last_time = 0.f;
 
   glClearColor(150 / 255.f, 100 / 255.f, 120 / 255.f, 1.f);
   while (!glfwWindowShouldClose(window)) {
-    fn::ProcessInput(window);
+    current_time = glfwGetTime();
+    delta_time = current_time - last_time;
+    last_time = current_time;
+
+    fn::processInput(window);
+
+    instace_camera.update(delta_time);
+    instace_camera.updateCameraMatrix();
+    instace_camera.setCameraMatrixToShader(shader_program, "camera_matrix");
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -108,16 +118,16 @@ auto main() -> int {
     model_matrix = glm::translate(model_matrix, glm::vec3(0.0f, 0.0f, 0.0f));
     model_matrix = glm::rotate(model_matrix, (float)glfwGetTime(),
                                glm::vec3(0.25f, 3.0f, 1.0f));
-    shader_program.SetMat4("model_matrix", model_matrix);
+    shader_program.setMat4("model_matrix", model_matrix);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
-  instance_vao.Delete();
-  square_vbo.Delete();
-  shader_program.Delete();
-  red_bricks.Delete();
+  instance_vao.deleteArray();
+  square_vbo.deleteBuffer();
+  shader_program.deleteShader();
+  red_bricks.deleteTexture();
 
   glfwTerminate();
   return EXIT_SUCCESS;

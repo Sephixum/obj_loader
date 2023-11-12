@@ -8,7 +8,8 @@ private:
 
 public:
   explicit VBO(signed long int size, float *vertices) noexcept;
-  auto Bind() const noexcept -> void;
-  auto UnBind() const noexcept -> void;
-  auto Delete() const noexcept -> void;
+
+  auto bind() const noexcept -> void;
+  auto unBind() const noexcept -> void;
+  auto deleteBuffer() const noexcept -> void;
 };

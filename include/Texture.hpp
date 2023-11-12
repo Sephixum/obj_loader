@@ -10,6 +10,8 @@ using uint = unsigned int;
 
 class Texture {
 private:
+  auto checkFirstInstantiation_() const noexcept -> void;
+
   uint id_;
   uint texture_type_;
   uint texture_unit_;
@@ -21,12 +23,11 @@ public:
   explicit Texture(const char *image_path, uint texture_type, uint slot,
                    uint pixel_type);
 
-  auto Bind() const noexcept -> void;
-  auto UnBind() const noexcept -> void;
-  auto Activate() const noexcept -> void;
-  auto DeActivate() const noexcept -> void;
-  auto Delete() const noexcept -> void;
-  auto GetTextureUnit() const noexcept -> uint;
+  auto bind() const noexcept -> void;
+  auto unBind() const noexcept -> void;
+  auto activate() const noexcept -> void;
+  auto deActivate() const noexcept -> void;
+  auto deleteTexture() const noexcept -> void;
 
-  auto CheckFirstInstantiation() const noexcept -> void;
+  auto getTextureUnit() const noexcept -> uint;
 };

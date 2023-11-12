@@ -7,8 +7,8 @@
 #include <stdexcept>
 
 namespace fn {
-auto CreateGlfwWindow() -> GLFWwindow *;
-auto LoadOpenGLFunctions() -> void;
-auto ProcessInput(GLFWwindow *target_window) -> void;
-auto InitGlfwAndGlad() -> GLFWwindow *;
+auto createGlfwWindow() -> GLFWwindow *;
+auto loadOpenGLFunctions() -> void;
+auto processInput(GLFWwindow *target_window) -> void;
+auto initGlfwAndGlad() -> GLFWwindow *;
 } // namespace fn

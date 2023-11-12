@@ -4,15 +4,15 @@ Texture::Texture(const char *image_path, uint texture_type, uint slot,
                  uint pixel_type)
     : texture_type_(texture_type), texture_unit_(slot) {
 
-  CheckFirstInstantiation();
+  checkFirstInstantiation_();
 
   int image_width, image_height, number_of_color_channels;
   auto image_bytes = stbi_load(image_path, &image_width, &image_height,
                                &number_of_color_channels, 0);
   if (image_bytes) {
     glGenTextures(1, &id_);
-    Bind();
-    Activate();
+    bind();
+    activate();
 
     glTexParameteri(texture_type_, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(texture_type_, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -42,33 +42,33 @@ Texture::Texture(const char *image_path, uint texture_type, uint slot,
     stbi_image_free(image_bytes);
     glBindTexture(texture_type_, 0);
 
-    UnBind();
-    DeActivate();
+    unBind();
+    deActivate();
   } else {
     throw std::runtime_error(
         std::format("[TEXTURE] {} could not be loaded.", image_path));
   }
 }
 
-auto Texture::Bind() const noexcept -> void {
+auto Texture::bind() const noexcept -> void {
   glBindTexture(texture_type_, id_);
 }
 
-auto Texture::UnBind() const noexcept -> void {
+auto Texture::unBind() const noexcept -> void {
   glBindTexture(texture_type_, 0);
 }
 
-auto Texture::Activate() const noexcept -> void {
+auto Texture::activate() const noexcept -> void {
   glActiveTexture(texture_unit_);
 }
 
-auto Texture::DeActivate() const noexcept -> void { glDisable(texture_type_); }
+auto Texture::deActivate() const noexcept -> void { glDisable(texture_type_); }
 
-auto Texture::Delete() const noexcept -> void { glDeleteTextures(1, &id_); }
+auto Texture::deleteTexture() const noexcept -> void { glDeleteTextures(1, &id_); }
 
-auto Texture::GetTextureUnit() const noexcept -> uint { return texture_unit_; }
+auto Texture::getTextureUnit() const noexcept -> uint { return texture_unit_; }
 
-auto Texture::CheckFirstInstantiation() const noexcept -> void {
+auto Texture::checkFirstInstantiation_() const noexcept -> void {
   if (is_first_instance_) {
     stbi_set_flip_vertically_on_load(true);
     is_first_instance_ = false;

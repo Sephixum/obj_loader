@@ -1,7 +1,7 @@
 #include <ShaderProgram.hpp>
 #include <format>
 
-auto ShaderProgram::StoreFileToString(const char *file_name) -> std::string {
+auto ShaderProgram::storeFileToString_(const char *file_name) -> std::string {
   std::ifstream file(file_name, std::ios::binary);
   if (file) {
     return std::string{std::istreambuf_iterator<char>(file),
@@ -18,8 +18,8 @@ auto ShaderProgram::StoreFileToString(const char *file_name) -> std::string {
 
 ShaderProgram::ShaderProgram(const char *vertex_shader_path,
                              const char *fragment_shader_path) {
-  std::string vertex_shader_text{StoreFileToString(vertex_shader_path)};
-  std::string fragment_shader_text{StoreFileToString(fragment_shader_path)};
+  std::string vertex_shader_text{storeFileToString_(vertex_shader_path)};
+  std::string fragment_shader_text{storeFileToString_(fragment_shader_path)};
 
   auto vertex_shader_source{vertex_shader_text.c_str()};
   auto fragment_shader_source{fragment_shader_text.c_str()};
@@ -73,77 +73,79 @@ ShaderProgram::ShaderProgram(const char *vertex_shader_path,
   }
 }
 
-auto ShaderProgram::Activate() const noexcept -> void { glUseProgram(id_); }
+auto ShaderProgram::activate() const noexcept -> void { glUseProgram(id_); }
 
-auto ShaderProgram::DeActivate() noexcept -> void { glUseProgram(0); }
+auto ShaderProgram::deActivate() noexcept -> void { glUseProgram(0); }
 
-auto ShaderProgram::Delete() const noexcept -> void { glDeleteProgram(id_); }
+auto ShaderProgram::deleteShader() const noexcept -> void {
+  glDeleteProgram(id_);
+}
 
-auto ShaderProgram::GetId() const noexcept -> unsigned int { return id_; }
+auto ShaderProgram::getId() const noexcept -> unsigned int { return id_; }
 
-auto ShaderProgram::SetBool(const char *name, bool value) const noexcept
+auto ShaderProgram::setBool(const char *name, bool value) const noexcept
     -> void {
   glUniform1i(glGetUniformLocation(id_, name), value);
 }
 
-auto ShaderProgram::SetInt(const char *name, int value) const noexcept -> void {
+auto ShaderProgram::setInt(const char *name, int value) const noexcept -> void {
   glUniform1i(glGetUniformLocation(id_, name), value);
 }
 
-auto ShaderProgram::SetFloat(const char *name, float value) const noexcept
+auto ShaderProgram::setFloat(const char *name, float value) const noexcept
     -> void {
   glUniform1f(glGetUniformLocation(id_, name), value);
 }
 
-auto ShaderProgram::SetVec2(const char *name,
+auto ShaderProgram::setVec2(const char *name,
                             const glm::vec2 &value) const noexcept -> void {
   glUniform2fv(glGetUniformLocation(id_, name), 1, glm::value_ptr(value));
 }
 
-auto ShaderProgram::SetVec2(const char *name, float x, float y) const noexcept
+auto ShaderProgram::setVec2(const char *name, float x, float y) const noexcept
     -> void {
   glUniform2f(glGetUniformLocation(id_, name), x, y);
 }
 
-auto ShaderProgram::SetVec3(const char *name,
+auto ShaderProgram::setVec3(const char *name,
                             const glm::vec3 &value) const noexcept -> void {
   glUniform3fv(glGetUniformLocation(id_, name), 1, glm::value_ptr(value));
 }
 
-auto ShaderProgram::SetVec3(const char *name, float x, float y,
+auto ShaderProgram::setVec3(const char *name, float x, float y,
                             float z) const noexcept -> void {
   glUniform3f(glGetUniformLocation(id_, name), x, y, z);
 }
 
-auto ShaderProgram::SetVec4(const char *name, glm::vec4 &value) const noexcept
+auto ShaderProgram::setVec4(const char *name, glm::vec4 &value) const noexcept
     -> void {
   glUniform4fv(glGetUniformLocation(id_, name), 1, glm::value_ptr(value));
 }
 
-auto ShaderProgram::SetVec4(const char *name, float x, float y, float z,
+auto ShaderProgram::setVec4(const char *name, float x, float y, float z,
                             float w) const noexcept -> void {
   glUniform4f(glGetUniformLocation(id_, name), x, y, z, w);
 }
 
-auto ShaderProgram::SetMat2(const char *name,
+auto ShaderProgram::setMat2(const char *name,
                             const glm::mat2 &matrix) const noexcept -> void {
   glUniformMatrix2fv(glGetUniformLocation(id_, name), 1, GL_FALSE,
                      glm::value_ptr(matrix));
 }
 
-auto ShaderProgram::SetMat3(const char *name,
+auto ShaderProgram::setMat3(const char *name,
                             const glm::mat3 &matrix) const noexcept -> void {
   glUniformMatrix3fv(glGetUniformLocation(id_, name), 1, GL_FALSE,
                      glm::value_ptr(matrix));
 }
 
-auto ShaderProgram::SetMat4(const char *name,
+auto ShaderProgram::setMat4(const char *name,
                             const glm::mat4 &matrix) const noexcept -> void {
   glUniformMatrix4fv(glGetUniformLocation(id_, name), 1, GL_FALSE,
                      glm::value_ptr(matrix));
 }
 
-auto ShaderProgram::SetTextureUnit(const char *name, int unit) const noexcept
+auto ShaderProgram::setTextureUnit(const char *name, int unit) const noexcept
     -> void {
   glUniform1i(glGetUniformLocation(id_, name), unit);
 }
