@@ -7,8 +7,8 @@
 
 class Camera {
 private:
-  auto keyboardInputProccess_(float delta_time) -> void;
-  auto mouseInputProccess_(float delta_time) -> void;
+  auto keyboardInputProccess_(float delta_time) noexcept -> void;
+  auto mouseInputProccess_(float delta_time) noexcept -> void;
 
   GLFWwindow *target_window_;
   float fov_;

@@ -68,16 +68,16 @@ auto main() -> int {
   //     1, 2, 3  //
   // };
 
-  ShaderProgram shader_program("resources/shaders/simple_cube_vertex.glsl",
-                               "resources/shaders/simple_cube_fragment.glsl");
-  shader_program.activate();
+  ShaderProgram cube_shader_program(
+      "resources/shaders/simple_cube_vertex.glsl",
+      "resources/shaders/simple_cube_fragment.glsl");
+  cube_shader_program.activate();
 
   VAO instance_vao;
 
-  VBO square_vbo(vertices.size() * sizeof(vertices[0]), vertices.data());
-  instance_vao.linkVBO(square_vbo, 0, 3, GL_FLOAT, 5 * sizeof(float),
-                       (void *)0);
-  instance_vao.linkVBO(square_vbo, 1, 2, GL_FLOAT, 5 * sizeof(float),
+  VBO cube_vbo(vertices.size() * sizeof(vertices[0]), vertices.data());
+  instance_vao.linkVBO(cube_vbo, 0, 3, GL_FLOAT, 5 * sizeof(float), (void *)0);
+  instance_vao.linkVBO(cube_vbo, 1, 2, GL_FLOAT, 5 * sizeof(float),
                        (void *)(3 * sizeof(float)));
   instance_vao.bind();
 
@@ -88,7 +88,7 @@ auto main() -> int {
                      GL_UNSIGNED_BYTE);
   red_bricks.activate();
   red_bricks.bind();
-  shader_program.setTextureUnit("tex0", red_bricks.getTextureUnit());
+  cube_shader_program.setTextureUnit("tex0", red_bricks.getTextureUnit());
 
   Camera instace_camera(kWindow_width / static_cast<float>(kWindow_height),
                         glm::vec3(0.0f, 0.0f, 2.0f), window);
@@ -107,7 +107,8 @@ auto main() -> int {
 
     instace_camera.update(delta_time);
     instace_camera.updateCameraMatrix();
-    instace_camera.setCameraMatrixToShader(shader_program, "camera_matrix");
+    instace_camera.setCameraMatrixToShader(cube_shader_program,
+                                           "camera_matrix");
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -118,15 +119,15 @@ auto main() -> int {
     model_matrix = glm::translate(model_matrix, glm::vec3(0.0f, 0.0f, 0.0f));
     model_matrix = glm::rotate(model_matrix, (float)glfwGetTime(),
                                glm::vec3(0.25f, 3.0f, 1.0f));
-    shader_program.setMat4("model_matrix", model_matrix);
+    cube_shader_program.setMat4("model_matrix", model_matrix);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
   instance_vao.deleteArray();
-  square_vbo.deleteBuffer();
-  shader_program.deleteShader();
+  cube_vbo.deleteBuffer();
+  cube_shader_program.deleteShader();
   red_bricks.deleteTexture();
 
   glfwTerminate();
