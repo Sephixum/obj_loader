@@ -4,36 +4,6 @@
 #include <glm/ext/quaternion_geometric.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-Camera::Camera(float aspect_ratio, glm::vec3 camera_position,
-               GLFWwindow *target_window, float fov, float near_plane,
-               float far_plane) noexcept
-    : target_window_(target_window), fov_(fov), aspect_ratio_(aspect_ratio),
-      near_plane_(near_plane), far_plane_(far_plane),
-      camera_position_(camera_position) {}
-
-auto Camera::updateCameraMatrix() noexcept -> void {
-  auto projection = glm::perspective(glm::radians(fov_), aspect_ratio_,
-                                     near_plane_, far_plane_);
-  auto view = glm::lookAt(camera_position_,
-                          camera_position_ + camera_orientation_, camera_up_);
-
-  camera_matrix_ = projection * view;
-}
-
-auto Camera::setCameraMatrixToShader(ShaderProgram &shader_program,
-                                     const char *uniform_name) const noexcept
-    -> void {
-  shader_program.setMat4(uniform_name, camera_matrix_);
-}
-
-auto Camera::getCameraMatrix() const noexcept -> glm::mat4 {
-  return camera_matrix_;
-}
-
-auto Camera::getCameraPosition() const noexcept -> glm::vec3 {
-  return camera_position_;
-}
-
 auto Camera::keyboardInputProccess_(float delta_time) noexcept -> void {
   auto temp_speed = speed_ * delta_time;
   if (glfwGetKey(target_window_, GLFW_KEY_W) == GLFW_PRESS) {
@@ -111,7 +81,63 @@ auto Camera::mouseInputProccess_() noexcept -> void {
   }
 }
 
+Camera::Camera(float aspect_ratio, glm::vec3 camera_position,
+               GLFWwindow *target_window, float fov, float near_plane,
+               float far_plane) noexcept
+    : target_window_(target_window), fov_(fov), aspect_ratio_(aspect_ratio),
+      near_plane_(near_plane), far_plane_(far_plane),
+      camera_position_(camera_position) {}
+
+auto Camera::updateCameraMatrix() noexcept -> glm::mat4 {
+  auto projection = glm::perspective(glm::radians(fov_), aspect_ratio_,
+                                     near_plane_, far_plane_);
+  auto view = glm::lookAt(camera_position_,
+                          camera_position_ + camera_orientation_, camera_up_);
+  camera_matrix_ = projection * view;
+
+  return camera_matrix_;
+}
+
 auto Camera::update(float delta_time) noexcept -> void {
   keyboardInputProccess_(delta_time);
   mouseInputProccess_();
+  updateCameraMatrix();
 }
+
+auto Camera::setFov(float fov) noexcept -> void { fov_ = fov; }
+
+auto Camera::setNearPlane(float new_near_plane) noexcept -> void {
+  near_plane_ = new_near_plane;
+}
+
+auto Camera::setFarPlane(float new_far_plane) noexcept -> void {
+  far_plane_ = new_far_plane;
+}
+
+auto Camera::setAspectRatio(float new_aspect_ratio) noexcept -> void {
+  aspect_ratio_ = new_aspect_ratio;
+}
+
+auto Camera::setCameraMatrixToShader(const ShaderProgram &shader_program,
+                                     const char *uniform_name) const noexcept
+    -> void {
+  shader_program.setMat4(uniform_name, camera_matrix_);
+}
+
+auto Camera::setCameraPosition(glm::vec3 new_position) noexcept -> void {
+  camera_position_ = new_position;
+}
+
+auto Camera::getCameraMatrix() const noexcept -> glm::mat4 {
+  return camera_matrix_;
+}
+
+auto Camera::getCameraPosition() const noexcept -> glm::vec3 {
+  return camera_position_;
+}
+
+auto Camera::getFov() const noexcept -> float { return fov_; }
+
+auto Camera::getNearPlane() const noexcept -> float { return near_plane_; }
+
+auto Camera::getFarPlane() const noexcept -> float { return far_plane_; }

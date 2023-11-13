@@ -5,10 +5,15 @@
  * that updates the controlls camera position
  * and orientation.
  *
+ * NOTE: Please take care that you would have
+ * to hold mouse left in order to activate
+ * camera rotation.
+ *
  */
 #pragma once
 
 #include "ShaderProgram.hpp"
+
 #include <GLFW/glfw3.h>
 #include <glm/ext.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
@@ -56,7 +61,7 @@ public:
                   GLFWwindow *target_window, float fov = 66.f,
                   float near_plane = 0.1f, float far_plane = 100.f) noexcept;
 
-  auto updateCameraMatrix() noexcept -> void;
+  auto updateCameraMatrix() noexcept -> glm::mat4;
   auto update(float delta_time) noexcept -> void;
 
   auto setFov(float fov) noexcept -> void;
@@ -69,7 +74,7 @@ public:
    * @param shader      ShaderProgram object which has to be passed by
    * reference.
    */
-  auto setCameraMatrixToShader(ShaderProgram &shader,
+  auto setCameraMatrixToShader(const ShaderProgram &shader,
                                const char *uniform_name) const noexcept -> void;
   auto setCameraPosition(glm::vec3 new_position) noexcept -> void;
 
