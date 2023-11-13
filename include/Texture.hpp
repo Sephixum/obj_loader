@@ -7,8 +7,9 @@
  */
 #pragma once
 
-#include "stb_image.h"
+#include "globals.hpp"
 
+#include <stb_image.h>
 #include <format>
 #include <glad/glad.h>
 #include <stdexcept>
@@ -23,7 +24,7 @@ private:
   uint texture_type_;
   uint texture_unit_;
 
-  inline static bool is_first_instance_{true};
+  static bool is_first_instance_;
 
 public:
   explicit Texture() = default;

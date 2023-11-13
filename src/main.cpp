@@ -92,23 +92,25 @@ auto main() -> int {
 
   Camera instace_camera(kWindow_width / static_cast<float>(kWindow_height),
                         glm::vec3(0.0f, 0.0f, 2.0f), window);
-  // instace_camera.setFov(90.f);
+  instace_camera.setFov(90.f);
 
-  float current_time;
-  float delta_time = 0.f;
-  float last_time = 0.f;
+  auto light_color = glm::vec3(1.0f, 1.0f, 1.0f);
+  auto cube_color = glm::vec3(1.0f, 0.5f, 0.31f);
 
   glClearColor(0 / 255.f, 0 / 255.f, 0 / 255.f, 1.f);
   while (!glfwWindowShouldClose(window)) {
-    current_time = glfwGetTime();
-    delta_time = current_time - last_time;
-    last_time = current_time;
-
     fn::processInput(window);
 
-    instace_camera.update(delta_time);
+    instace_camera.update();
 
     auto model_matrix = glm::mat4(1.0f);
+
+    auto light_cube_radius = 7.0f;
+    auto x = light_cube_radius * std::cos(static_cast<float>(glfwGetTime()));
+    auto y =
+        light_cube_radius * 1.5 * std::cos(static_cast<float>(glfwGetTime()));
+    auto z = light_cube_radius * std::sin(static_cast<float>(glfwGetTime()));
+    auto light_position = glm::vec3(x, 4.0f, z);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     /**
@@ -118,6 +120,10 @@ auto main() -> int {
     cube_shader.activate();
     cube_shader.setMat4("model_matrix", model_matrix);
     cube_shader.setMat4("camera_matrix", instace_camera.getCameraMatrix());
+    cube_shader.setVec3("light_position", light_position);
+    cube_shader.setVec3("light_color", light_color);
+    cube_shader.setVec3("object_color", cube_color);
+    cube_shader.setVec3("camera_position", instace_camera.getCameraPosition());
     cube_vao.bind();
     glDrawArrays(GL_TRIANGLES, 0, 36);
     cube_vao.unBind();
@@ -128,10 +134,6 @@ auto main() -> int {
      * the light_cube.
      *
      */
-    auto light_cube_radius = 7.0f;
-    auto x = light_cube_radius * std::cos(static_cast<float>(glfwGetTime()));
-    auto z = light_cube_radius * std::sin(static_cast<float>(glfwGetTime()));
-    auto light_position = glm::vec3(x, 4.0f, z);
     model_matrix = glm::mat4(0.1f);
     model_matrix = glm::scale(model_matrix, glm::vec3(0.3f, 0.3f, 0.3f));
     model_matrix = glm::translate(model_matrix, light_position);
@@ -146,6 +148,7 @@ auto main() -> int {
     light_cube_shader.setMat4("model_matrix", model_matrix);
     light_cube_shader.setMat4("camera_matrix",
                               instace_camera.getCameraMatrix());
+    light_cube_shader.setVec3("light_color", light_color);
     light_vao.bind();
     glDrawArrays(GL_TRIANGLES, 0, 36);
     light_vao.unBind();

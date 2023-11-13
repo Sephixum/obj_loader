@@ -4,8 +4,12 @@
 #include <glm/ext/quaternion_geometric.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-auto Camera::keyboardInputProccess_(float delta_time) noexcept -> void {
-  auto temp_speed = speed_ * delta_time;
+float Camera::current_time_ = 0.f;
+float Camera::delta_time_ = 0.f;
+float Camera::last_time_ = 0.f;
+
+auto Camera::keyboardInputProccess_() noexcept -> void {
+  auto temp_speed = speed_ * delta_time_;
   if (glfwGetKey(target_window_, GLFW_KEY_W) == GLFW_PRESS) {
     camera_position_ += temp_speed * camera_orientation_;
   }
@@ -98,8 +102,12 @@ auto Camera::updateCameraMatrix() noexcept -> glm::mat4 {
   return camera_matrix_;
 }
 
-auto Camera::update(float delta_time) noexcept -> void {
-  keyboardInputProccess_(delta_time);
+auto Camera::update() noexcept -> void {
+  current_time_ = glfwGetTime();
+  delta_time_ = current_time_ - last_time_;
+  last_time_ = current_time_;
+
+  keyboardInputProccess_();
   mouseInputProccess_();
   updateCameraMatrix();
 }

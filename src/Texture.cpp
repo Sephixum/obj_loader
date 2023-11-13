@@ -1,5 +1,7 @@
 #include "Texture.hpp"
 
+bool Texture::is_first_instance_ = true;
+
 Texture::Texture(const char *image_path, uint texture_type, uint slot,
                  uint pixel_type)
     : texture_type_(texture_type), texture_unit_(slot) {
@@ -44,9 +46,15 @@ Texture::Texture(const char *image_path, uint texture_type, uint slot,
 
     unBind();
     deActivate();
+
+    if (IS_VERBOSE) {
+      std::puts(std::format("\n[TEXTURE] \"{}\" loaded to index {}.",
+                            image_path, texture_unit_)
+                    .c_str());
+    }
   } else {
     throw std::runtime_error(
-        std::format("[TEXTURE] {} could not be loaded.", image_path));
+        std::format("\n[TEXTURE] {} could not be loaded.", image_path));
   }
 }
 
@@ -64,7 +72,9 @@ auto Texture::activate() const noexcept -> void {
 
 auto Texture::deActivate() const noexcept -> void { glDisable(texture_type_); }
 
-auto Texture::deleteTexture() const noexcept -> void { glDeleteTextures(1, &id_); }
+auto Texture::deleteTexture() const noexcept -> void {
+  glDeleteTextures(1, &id_);
+}
 
 auto Texture::getTextureUnit() const noexcept -> uint { return texture_unit_; }
 

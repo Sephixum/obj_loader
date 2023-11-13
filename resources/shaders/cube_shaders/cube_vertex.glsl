@@ -9,6 +9,7 @@ layout (location = 2) in vec3 aNormal;
 //=======output of vertex sahder========
 out vec2 tex_coords;
 out vec3 normal_vector;
+out vec3 fragment_position;
 //======================================
 
 //==============uniforms================
@@ -21,5 +22,6 @@ uniform mat4 camera_matrix;
 void main() {
    gl_Position = camera_matrix * model_matrix * vec4(aPos, 1.0f);
    tex_coords = aTex_coords;
-   normal_vector = aNormal;
+   normal_vector = mat3(transpose(inverse(model_matrix))) * aNormal;
+   fragment_position = vec3(model_matrix * vec4(aPos, 1.0f));
 }

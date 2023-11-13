@@ -20,8 +20,12 @@
 
 class Camera {
 private:
-  auto keyboardInputProccess_(float delta_time) noexcept -> void;
+  auto keyboardInputProccess_() noexcept -> void;
   auto mouseInputProccess_() noexcept -> void;
+
+  static float current_time_;
+  static float delta_time_;
+  static float last_time_;
 
   GLFWwindow *target_window_;
   float fov_;
@@ -62,7 +66,7 @@ public:
                   float near_plane = 0.1f, float far_plane = 100.f) noexcept;
 
   auto updateCameraMatrix() noexcept -> glm::mat4;
-  auto update(float delta_time) noexcept -> void;
+  auto update() noexcept -> void;
 
   auto setFov(float fov) noexcept -> void;
   auto setNearPlane(float new_near_plane) noexcept -> void;
