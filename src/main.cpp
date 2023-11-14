@@ -1,5 +1,7 @@
 #include "Camera.hpp"
 #include "EBO.hpp"
+#include "Light.hpp"
+#include "Material.hpp" 
 #include "ShaderProgram.hpp"
 #include "Texture.hpp"
 #include "Utils.hpp"
@@ -97,6 +99,20 @@ auto main() -> int {
   auto light_color = glm::vec3(1.0f, 1.0f, 1.0f);
   auto cube_color = glm::vec3(1.0f, 0.5f, 0.31f);
 
+  auto circular_position = []() -> glm::vec3 {
+    auto x = 7.0f * std::cos(static_cast<float>(glfwGetTime()));
+    auto z = 7.0f * std::sin(static_cast<float>(glfwGetTime()));
+    return glm::vec3(x, 4.0f, z);
+  };
+
+  Material instance_material("material", glm::vec3(1.0f, 0.5f, 0.31f),
+                             glm::vec3(1.0f, 0.5f, 0.31f),
+                             glm::vec3(0.5f, 0.5f, 0.5f), 128.0f);
+
+  Light instance_light("light", glm::vec3(0.2f, 0.2f, 0.2f),
+                       glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.0f, 1.0f, 1.0f),
+                       circular_position());
+
   glClearColor(0 / 255.f, 0 / 255.f, 0 / 255.f, 1.f);
   while (!glfwWindowShouldClose(window)) {
     fn::processInput(window);
@@ -105,12 +121,7 @@ auto main() -> int {
 
     auto model_matrix = glm::mat4(1.0f);
 
-    auto light_cube_radius = 7.0f;
-    auto x = light_cube_radius * std::cos(static_cast<float>(glfwGetTime()));
-    auto y =
-        light_cube_radius * 1.5 * std::cos(static_cast<float>(glfwGetTime()));
-    auto z = light_cube_radius * std::sin(static_cast<float>(glfwGetTime()));
-    auto light_position = glm::vec3(x, 4.0f, z);
+    instance_light.setPosition(circular_position());
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     /**
@@ -120,10 +131,11 @@ auto main() -> int {
     cube_shader.activate();
     cube_shader.setMat4("model_matrix", model_matrix);
     cube_shader.setMat4("camera_matrix", instace_camera.getCameraMatrix());
-    cube_shader.setVec3("light_position", light_position);
-    cube_shader.setVec3("light_color", light_color);
-    cube_shader.setVec3("object_color", cube_color);
     cube_shader.setVec3("camera_position", instace_camera.getCameraPosition());
+    cube_shader.setMaterial(instance_material.getUniformName().c_str(),
+                            instance_material);
+    cube_shader.setLight(instance_light.getUniformName().c_str(),
+                         instance_light);
     cube_vao.bind();
     glDrawArrays(GL_TRIANGLES, 0, 36);
     cube_vao.unBind();
@@ -136,7 +148,7 @@ auto main() -> int {
      */
     model_matrix = glm::mat4(0.1f);
     model_matrix = glm::scale(model_matrix, glm::vec3(0.3f, 0.3f, 0.3f));
-    model_matrix = glm::translate(model_matrix, light_position);
+    model_matrix = glm::translate(model_matrix, instance_light.getPosition());
     model_matrix = glm::rotate(model_matrix, (float)glfwGetTime(),
                                glm::vec3(1.0f, 1.0f, 1.0f));
 

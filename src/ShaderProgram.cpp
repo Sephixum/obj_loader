@@ -149,3 +149,44 @@ auto ShaderProgram::setTextureUnit(const char *name, int unit) const noexcept
     -> void {
   glUniform1i(glGetUniformLocation(id_, name), unit);
 }
+
+auto ShaderProgram::setMaterial(const char *name,
+                                const Material &material) const noexcept
+    -> void {
+  std::string ambient_component = name;
+  ambient_component += ".ambient";
+
+  std::string diffuse_component = name;
+  diffuse_component += ".diffuse";
+
+  std::string specular_component = name;
+  specular_component += ".specular";
+
+  std::string shininess = name;
+  shininess += ".shininess";
+
+  setVec3(ambient_component.c_str(), material.getAmbient());
+  setVec3(diffuse_component.c_str(), material.getDiffuse());
+  setVec3(specular_component.c_str(), material.getSpecular());
+  setFloat(shininess.c_str(), material.getShininess());
+}
+
+auto ShaderProgram::setLight(const char *name,
+                             const Light &light) const noexcept -> void {
+  std::string ambient_component = name;
+  ambient_component += ".ambient";
+
+  std::string diffuse_component = name;
+  diffuse_component += ".diffuse";
+
+  std::string specular_component = name;
+  specular_component += ".specular";
+
+  std::string position = name;
+  position += ".position";
+
+  setVec3(ambient_component.c_str(), light.getAmbient());
+  setVec3(diffuse_component.c_str(), light.getDiffuse());
+  setVec3(specular_component.c_str(), light.getSpecular());
+  setVec3(position.c_str(), light.getPosition());
+}

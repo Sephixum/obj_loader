@@ -7,6 +7,8 @@
  */
 #pragma once
 
+#include "Light.hpp"
+#include "Material.hpp"
 #include "globals.hpp"
 
 #include <format>
@@ -46,6 +48,9 @@ public:
   auto setMat4(const char *name, const glm::mat4 &matrix) const noexcept
       -> void;
   auto setTextureUnit(const char *name, int unit) const noexcept -> void;
+  auto setMaterial(const char *name, const Material &material) const noexcept
+      -> void;
+  auto setLight(const char *name, const Light &light) const noexcept -> void;
 
-  [[nodiscard("Being unused")]] auto getId() const noexcept -> unsigned int;
+  [[nodiscard]] auto getId() const noexcept -> unsigned int;
 };

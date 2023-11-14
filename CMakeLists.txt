@@ -25,7 +25,9 @@ target_sources(
           src/Utils.cpp
           src/stb_image_activator.cpp
           src/Texture.cpp
-          src/Camera.cpp)
+          src/Camera.cpp
+          src/Material.cpp
+	  src/Light.cpp)
 target_link_libraries(output PRIVATE glfw glad)
 target_include_directories(output PRIVATE include/ deps/stb_image/)
 

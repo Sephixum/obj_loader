@@ -1,6 +1,24 @@
 #version 330 core
 
 /**
+* Strucs
+*
+*/
+struct Material {
+   vec3 ambient;
+   vec3 diffuse;
+   vec3 specular;
+   float shininess;
+};
+
+struct Light {
+   vec3 ambient;
+   vec3 diffuse;
+   vec3 specular;
+   vec3 position;
+};
+
+/**
 * Output of fragment sahder
 *
 */
@@ -23,47 +41,41 @@ uniform vec3 light_position;
 uniform vec3 light_color;
 uniform vec3 object_color;
 uniform vec3 camera_position;
+uniform Material material;
+uniform Light light;
 
 void main() {
-   /**
-   * Preparations for different lighting
-   * components.
-   *
-   */
-   vec3 normalized_normal = normalize(normal_vector);
-   vec3 light_direction = normalize(light_position - fragment_position);
-   vec3 camera_direction = normalize(camera_position - fragment_position);
 
    /**
    * Ambient lighting.
    *
    */
-   float ambient_strength = 0.08;
-   vec3 ambient_color = light_color * ambient_strength;
+   vec3 ambient_lighting = light.ambient * material.ambient;
 
 
    /**
    * Diffuse lighting.
    *
    */
+   vec3 normalized_normal = normalize(normal_vector);
+   vec3 light_direction = normalize(light.position - fragment_position);
    float diffuse_strength = max(dot(normalized_normal, light_direction), 0.0f);
-   vec3 diffuse_color = light_color * diffuse_strength;
+   vec3 diffuse_lighting = light.diffuse * (diffuse_strength * material.diffuse);
 
    /**
    * Specular lighting.
    *
    */
-   float specular_strength = 0.5;
+   vec3 camera_direction = normalize(camera_position - fragment_position);
    vec3 reflect_direction = reflect(-light_direction, normalized_normal);
    float specular_intensity =
 	pow(
-	max(dot(camera_direction, reflect_direction), 0.0f), 128
+	max(dot(camera_direction, reflect_direction), 0.0f), material.shininess
 	);
    vec3 specular_lighting = 
-   	light_color * specular_strength * specular_intensity;
+   	light.specular * (specular_intensity * material.specular);
 
-   vec3 result = object_color * 
-   	(ambient_color + diffuse_color + specular_lighting);
+   vec3 result = 
+   	(ambient_lighting + diffuse_lighting + specular_lighting);
    FragColor = vec4(result, 1.0f);
-   // FragColor = vec4(result, 1.0f) * texture(tex0, tex_coords);
 }
