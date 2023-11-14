@@ -37,9 +37,6 @@ in vec3 fragment_position;
 *
 */
 uniform sampler2D tex0;
-uniform vec3 light_position;
-uniform vec3 light_color;
-uniform vec3 object_color;
 uniform vec3 camera_position;
 uniform Material material;
 uniform Light light;

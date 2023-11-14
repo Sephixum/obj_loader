@@ -1,7 +1,7 @@
 #include "Camera.hpp"
 #include "EBO.hpp"
 #include "Light.hpp"
-#include "Material.hpp" 
+#include "Material.hpp"
 #include "ShaderProgram.hpp"
 #include "Texture.hpp"
 #include "Utils.hpp"
@@ -96,22 +96,12 @@ auto main() -> int {
                         glm::vec3(0.0f, 0.0f, 2.0f), window);
   instace_camera.setFov(90.f);
 
-  auto light_color = glm::vec3(1.0f, 1.0f, 1.0f);
-  auto cube_color = glm::vec3(1.0f, 0.5f, 0.31f);
-
-  auto circular_position = []() -> glm::vec3 {
-    auto x = 7.0f * std::cos(static_cast<float>(glfwGetTime()));
-    auto z = 7.0f * std::sin(static_cast<float>(glfwGetTime()));
-    return glm::vec3(x, 4.0f, z);
-  };
-
   Material instance_material("material", glm::vec3(1.0f, 0.5f, 0.31f),
                              glm::vec3(1.0f, 0.5f, 0.31f),
                              glm::vec3(0.5f, 0.5f, 0.5f), 128.0f);
-
   Light instance_light("light", glm::vec3(0.2f, 0.2f, 0.2f),
                        glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.0f, 1.0f, 1.0f),
-                       circular_position());
+                       fn::getGlfwPosition());
 
   glClearColor(0 / 255.f, 0 / 255.f, 0 / 255.f, 1.f);
   while (!glfwWindowShouldClose(window)) {
@@ -121,7 +111,7 @@ auto main() -> int {
 
     auto model_matrix = glm::mat4(1.0f);
 
-    instance_light.setPosition(circular_position());
+    instance_light.setPosition(fn::getGlfwPosition());
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     /**
@@ -160,7 +150,6 @@ auto main() -> int {
     light_cube_shader.setMat4("model_matrix", model_matrix);
     light_cube_shader.setMat4("camera_matrix",
                               instace_camera.getCameraMatrix());
-    light_cube_shader.setVec3("light_color", light_color);
     light_vao.bind();
     glDrawArrays(GL_TRIANGLES, 0, 36);
     light_vao.unBind();
