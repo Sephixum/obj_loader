@@ -2,8 +2,14 @@
 
 bool Texture::is_first_instance_ = true;
 
-Texture::Texture(const char *image_path, uint texture_type, uint slot,
-                 uint pixel_type)
+auto Texture::checkFirstInstantiation_() const noexcept -> void {
+  if (is_first_instance_) {
+    stbi_set_flip_vertically_on_load(true);
+    is_first_instance_ = false;
+  }
+}
+
+Texture::Texture(const char *image_path, uint texture_type, uint slot)
     : texture_type_(texture_type), texture_unit_(slot) {
 
   checkFirstInstantiation_();
@@ -13,8 +19,7 @@ Texture::Texture(const char *image_path, uint texture_type, uint slot,
                                &number_of_color_channels, 0);
   if (image_bytes) {
     glGenTextures(1, &id_);
-    bind();
-    activate();
+    glBindTexture(texture_type_, id_);
 
     glTexParameteri(texture_type_, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(texture_type_, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -37,15 +42,12 @@ Texture::Texture(const char *image_path, uint texture_type, uint slot,
     } break;
     }
 
-    glTexImage2D(texture_type_, 0, format, image_width, image_height, 0, format,
-                 pixel_type, image_bytes);
+    glTexImage2D(texture_type_, 0, GL_RGBA8, image_width, image_height, 0,
+                 format, GL_UNSIGNED_BYTE, image_bytes);
     glGenerateMipmap(texture_type_);
 
-    stbi_image_free(image_bytes);
     glBindTexture(texture_type_, 0);
-
-    unBind();
-    deActivate();
+    stbi_image_free(image_bytes);
 
     if (IS_VERBOSE) {
       std::puts(std::format("\n[TEXTURE] \"{}\" loaded to index {}.",
@@ -59,6 +61,7 @@ Texture::Texture(const char *image_path, uint texture_type, uint slot,
 }
 
 auto Texture::bind() const noexcept -> void {
+  glActiveTexture(texture_unit_);
   glBindTexture(texture_type_, id_);
 }
 
@@ -67,10 +70,8 @@ auto Texture::unBind() const noexcept -> void {
 }
 
 auto Texture::activate() const noexcept -> void {
-  glActiveTexture(texture_unit_);
+  glActiveTexture(GL_TEXTURE0 + texture_unit_);
 }
-
-auto Texture::deActivate() const noexcept -> void { glDisable(texture_type_); }
 
 auto Texture::deleteTexture() const noexcept -> void {
   glDeleteTextures(1, &id_);
@@ -78,9 +79,4 @@ auto Texture::deleteTexture() const noexcept -> void {
 
 auto Texture::getTextureUnit() const noexcept -> uint { return texture_unit_; }
 
-auto Texture::checkFirstInstantiation_() const noexcept -> void {
-  if (is_first_instance_) {
-    stbi_set_flip_vertically_on_load(true);
-    is_first_instance_ = false;
-  }
-}
+auto Texture::getId() const noexcept -> uint { return id_; }

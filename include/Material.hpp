@@ -7,6 +7,7 @@
  */
 #pragma once
 
+#include "Texture.hpp"
 #include <glm/glm.hpp>
 #include <string>
 
@@ -16,6 +17,7 @@ private:
   glm::vec3 diffuse_color_;
   glm::vec3 ambient_color_;
   glm::vec3 specular_color_;
+  Texture texture_;
   float shininess_;
 
 public:

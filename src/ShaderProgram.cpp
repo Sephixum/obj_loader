@@ -166,7 +166,8 @@ auto ShaderProgram::setMaterial(const char *name,
   shininess += ".shininess";
 
   setVec3(ambient_component.c_str(), material.getAmbient());
-  setVec3(diffuse_component.c_str(), material.getDiffuse());
+  // setVec3(diffuse_component.c_str(), material.getDiffuse());
+  setInt(diffuse_component.c_str(), 0);
   setVec3(specular_component.c_str(), material.getSpecular());
   setFloat(shininess.c_str(), material.getShininess());
 }
