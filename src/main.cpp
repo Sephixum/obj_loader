@@ -70,7 +70,6 @@ auto main() -> int {
   ShaderProgram cube_shader(
       "resources/shaders/cube_shaders/cube_vertex.glsl",
       "resources/shaders/cube_shaders/cube_fragment.glsl");
-
   ShaderProgram light_cube_shader(
       "resources/shaders/light_shaders/light_vertex.glsl",
       "resources/shaders/light_shaders/light_fragment.glsl");
@@ -87,10 +86,9 @@ auto main() -> int {
   VAO light_vao;
   light_vao.linkVBO(cube_vbo, 0, 3, GL_FLOAT, 8 * sizeof(float), (void *)0);
 
-  Texture container_texture("resources/textures/container2.png", GL_TEXTURE_2D,
-                            0);
+  Texture container_texture("resources/textures/container2.png", GL_TEXTURE_2D, 0);
   Texture container_specular("resources/textures/container2_specular.png",
-                             GL_TEXTURE_2D, 2);
+                             GL_TEXTURE_2D, 1);
   container_texture.bind();
   cube_shader.setTextureUnit("tex0", container_texture.getTextureUnit());
 

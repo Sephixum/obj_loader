@@ -31,6 +31,16 @@ auto Material::setShininess(float new_shininess) noexcept -> void {
   shininess_ = new_shininess;
 }
 
+auto Material::setDiffuseTexture(const Texture &new_diffuse_texture) noexcept
+    -> void {
+  diffuse_texture_ = new_diffuse_texture;
+}
+
+auto Material::setSpecularTexture(const Texture &new_specular_texture) noexcept
+    -> void {
+  specular_texture_ = new_specular_texture;
+}
+
 auto Material::getUniformName() const noexcept -> std::string {
   return uniform_name_;
 }
@@ -48,3 +58,12 @@ auto Material::getSpecular() const noexcept -> glm::vec3 {
 }
 
 auto Material::getShininess() const noexcept -> float { return shininess_; }
+
+auto Material::getDiffuseTexture() noexcept -> Texture & {
+  return diffuse_texture_;
+  ;
+}
+
+auto Material::getSpecularTexture() noexcept -> Texture & {
+  return specular_texture_;
+}

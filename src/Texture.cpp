@@ -9,7 +9,8 @@ auto Texture::checkFirstInstantiation_() const noexcept -> void {
   }
 }
 
-Texture::Texture(const char *image_path, uint texture_type, uint slot)
+Texture::Texture(const char *image_path, unsigned int texture_type,
+                 unsigned int slot)
     : texture_type_(texture_type), texture_unit_(slot) {
 
   checkFirstInstantiation_();
@@ -28,7 +29,7 @@ Texture::Texture(const char *image_path, uint texture_type, uint slot)
     glTexParameteri(texture_type_, GL_TEXTURE_MAG_FILTER,
                     GL_LINEAR_MIPMAP_LINEAR);
 
-    uint format;
+    unsigned int format;
     switch (number_of_color_channels) {
     case 3: {
       format = GL_RGB;
@@ -50,7 +51,7 @@ Texture::Texture(const char *image_path, uint texture_type, uint slot)
     stbi_image_free(image_bytes);
 
     if (IS_VERBOSE) {
-      std::puts(std::format("\n[TEXTURE] \"{}\" loaded to index {}.",
+      std::puts(std::format("[TEXTURE] \"{}\" loaded with {} as texture unit.",
                             image_path, texture_unit_)
                     .c_str());
     }
@@ -58,6 +59,19 @@ Texture::Texture(const char *image_path, uint texture_type, uint slot)
     throw std::runtime_error(
         std::format("\n[TEXTURE] {} could not be loaded.", image_path));
   }
+}
+
+Texture::Texture(const Texture &lvalue_texture) {
+  id_ = lvalue_texture.id_;
+  texture_type_ = lvalue_texture.texture_type_;
+}
+
+auto Texture::operator=(const Texture &rhs) -> Texture & {
+  if (this != &rhs) {
+    id_ = rhs.id_;
+    texture_type_ = rhs.texture_type_;
+  }
+  return *this;
 }
 
 auto Texture::bind() const noexcept -> void {
@@ -69,14 +83,12 @@ auto Texture::unBind() const noexcept -> void {
   glBindTexture(texture_type_, 0);
 }
 
-auto Texture::activate() const noexcept -> void {
-  glActiveTexture(GL_TEXTURE0 + texture_unit_);
-}
-
 auto Texture::deleteTexture() const noexcept -> void {
   glDeleteTextures(1, &id_);
 }
 
-auto Texture::getTextureUnit() const noexcept -> uint { return texture_unit_; }
+auto Texture::getId() const noexcept -> unsigned int { return id_; }
 
-auto Texture::getId() const noexcept -> uint { return id_; }
+auto Texture::getTextureUnit() const noexcept -> unsigned int {
+  return texture_unit_;
+}
