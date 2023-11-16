@@ -9,9 +9,8 @@ auto Texture::checkFirstInstantiation_() const noexcept -> void {
   }
 }
 
-Texture::Texture(const char *image_path, unsigned int texture_type,
-                 unsigned int slot)
-    : texture_type_(texture_type), texture_unit_(slot) {
+Texture::Texture(const char *image_path, GLenum texture_type, GLenum slot)
+    : texture_type_(texture_type), texture_slot_(slot) {
 
   checkFirstInstantiation_();
 
@@ -52,7 +51,7 @@ Texture::Texture(const char *image_path, unsigned int texture_type,
 
     if (IS_VERBOSE) {
       std::puts(std::format("[TEXTURE] \"{}\" loaded with {} as texture unit.",
-                            image_path, texture_unit_)
+                            image_path, texture_slot_)
                     .c_str());
     }
   } else {
@@ -61,21 +60,10 @@ Texture::Texture(const char *image_path, unsigned int texture_type,
   }
 }
 
-Texture::Texture(const Texture &lvalue_texture) {
-  id_ = lvalue_texture.id_;
-  texture_type_ = lvalue_texture.texture_type_;
-}
-
-auto Texture::operator=(const Texture &rhs) -> Texture & {
-  if (this != &rhs) {
-    id_ = rhs.id_;
-    texture_type_ = rhs.texture_type_;
-  }
-  return *this;
-}
+Texture::~Texture() {}
 
 auto Texture::bind() const noexcept -> void {
-  glActiveTexture(texture_unit_);
+  glActiveTexture(texture_slot_);
   glBindTexture(texture_type_, id_);
 }
 
@@ -83,12 +71,8 @@ auto Texture::unBind() const noexcept -> void {
   glBindTexture(texture_type_, 0);
 }
 
-auto Texture::deleteTexture() const noexcept -> void {
-  glDeleteTextures(1, &id_);
-}
-
 auto Texture::getId() const noexcept -> unsigned int { return id_; }
 
-auto Texture::getTextureUnit() const noexcept -> unsigned int {
-  return texture_unit_;
+auto Texture::getTextureSlot() const noexcept -> unsigned int {
+  return texture_slot_;
 }

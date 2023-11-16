@@ -6,7 +6,7 @@
 */
 struct Material {
    sampler2D diffuse;
-   vec3 specular;
+   sampler2D specular;
    float shininess;
 };
 
@@ -35,7 +35,6 @@ in vec3 fragment_position;
 * Uniforms
 *
 */
-uniform sampler2D tex0;
 uniform vec3 camera_position;
 uniform Material material;
 uniform Light light;
@@ -71,9 +70,13 @@ void main() {
 	max(dot(camera_direction, reflect_direction), 0.0f), material.shininess
 	);
    vec3 specular_lighting = 
-   	light.specular * (specular_intensity * material.specular);
+   	light.specular *
+	specular_intensity *
+	vec3(texture(material.specular, tex_coords));
 
    vec3 result = 
    	(ambient_lighting + diffuse_lighting + specular_lighting);
-   FragColor = texture2D(tex0, tex_coords) * vec4(result, 1.0f);
+   FragColor = vec4(result, 1.0f);
+   // vec4 test = texture(material.specular, tex_coords);
+   // FragColor = vec4(test);
 }

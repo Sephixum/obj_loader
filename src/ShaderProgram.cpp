@@ -153,9 +153,6 @@ auto ShaderProgram::setTextureUnit(const char *name, int unit) const noexcept
 auto ShaderProgram::setMaterial(const char *name,
                                 const Material &material) const noexcept
     -> void {
-  std::string ambient_component = name;
-  ambient_component += ".ambient";
-
   std::string diffuse_component = name;
   diffuse_component += ".diffuse";
 
@@ -165,10 +162,15 @@ auto ShaderProgram::setMaterial(const char *name,
   std::string shininess = name;
   shininess += ".shininess";
 
-  setVec3(ambient_component.c_str(), material.getAmbient());
-  // setVec3(diffuse_component.c_str(), material.getDiffuse());
-  setInt(diffuse_component.c_str(), 0);
-  setVec3(specular_component.c_str(), material.getSpecular());
+  auto &material_diffuse_texture = material.getDiffuseTexture();
+  auto &material_specular_texture = material.getSpecularTexture();
+
+  material_diffuse_texture.bind();
+  material_specular_texture.bind();
+
+  setTextureUnit(diffuse_component.c_str(), 0);
+  setTextureUnit(specular_component.c_str(), 1);
+
   setFloat(shininess.c_str(), material.getShininess());
 }
 

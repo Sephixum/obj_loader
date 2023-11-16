@@ -86,20 +86,19 @@ auto main() -> int {
   VAO light_vao;
   light_vao.linkVBO(cube_vbo, 0, 3, GL_FLOAT, 8 * sizeof(float), (void *)0);
 
-  Texture container_texture("resources/textures/container2.png", GL_TEXTURE_2D, 0);
+  Texture container_texture("resources/textures/container2.png", GL_TEXTURE_2D,
+                            GL_TEXTURE0);
   Texture container_specular("resources/textures/container2_specular.png",
-                             GL_TEXTURE_2D, 1);
-  container_texture.bind();
-  cube_shader.setTextureUnit("tex0", container_texture.getTextureUnit());
+                             GL_TEXTURE_2D, GL_TEXTURE1);
 
   Camera instace_camera(kWindow_width / static_cast<float>(kWindow_height),
                         glm::vec3(0.0f, 0.0f, 2.0f), window);
   instace_camera.setFov(90.f);
 
-  Material instance_material("material", glm::vec3(0.0215f, 0.1745f, 0.07568f),
-                             glm::vec3(0.07568f, 0.61424f, 0.07568f),
-                             glm::vec3(0.633f, 0.727811f, 0.633f), 25.0f);
-  Light instance_light("light", glm::vec3(0.3f, 0.3f, 0.3f),
+  Material instance_material("material", container_texture,
+                             std::move(container_specular), 25.0f);
+
+  Light instance_light("light", glm::vec3(0.2f, 0.2f, 0.2f),
                        glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.0f, 1.0f, 1.0f),
                        fn::getGlfwPosition());
 
@@ -160,7 +159,6 @@ auto main() -> int {
   cube_vao.deleteArray();
   cube_vbo.deleteBuffer();
   cube_shader.deleteShader();
-  container_texture.deleteTexture();
 
   glfwTerminate();
   return EXIT_SUCCESS;
