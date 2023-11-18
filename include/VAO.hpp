@@ -9,6 +9,9 @@
 #pragma once
 
 #include "VBO.hpp"
+
+#include <cstddef>
+
 class VAO {
 private:
   unsigned int id_;
@@ -21,6 +24,6 @@ public:
   auto linkVBO(VBO &target_vbo, unsigned int layout,
                unsigned int number_of_components,
                unsigned int type_of_components, signed long int stride,
-               void *offset) const noexcept -> void;
+               std::size_t offset) const noexcept -> void;
   auto deleteArray() const noexcept -> void;
 };

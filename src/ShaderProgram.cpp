@@ -186,10 +186,10 @@ auto ShaderProgram::setLight(const char *name,
   specular_component += ".specular";
 
   std::string position = name;
-  position += ".position";
+  position += ".direction";
 
   setVec3(ambient_component.c_str(), light.getAmbient());
   setVec3(diffuse_component.c_str(), light.getDiffuse());
   setVec3(specular_component.c_str(), light.getSpecular());
-  setVec3(position.c_str(), light.getPosition());
+  setVec3(position.c_str(), light.getDirection());
 }

@@ -27,9 +27,9 @@ private:
 
 public:
   Texture(const char *image_path, GLenum texture_type, GLenum slot);
-  Texture(const Texture &other) = default;
-  auto operator=(const Texture &rhs) -> Texture & = default;
+  Texture(const Texture &other) = delete;
   Texture(Texture &&other) = default;
+  auto operator=(const Texture &rhs) -> Texture & = delete;
   auto operator=(Texture &&rhs) -> Texture & = default;
   ~Texture();
 
@@ -38,6 +38,6 @@ public:
   auto activate() const noexcept -> void;
   auto deActivate() const noexcept -> void;
 
-  [[nodiscard]] auto getId() const noexcept -> unsigned int;
-  [[nodiscard]] auto getTextureSlot() const noexcept -> unsigned int;
+  [[nodiscard]] auto getId() const noexcept -> GLuint;
+  [[nodiscard]] auto getTextureSlot() const noexcept -> GLuint;
 };

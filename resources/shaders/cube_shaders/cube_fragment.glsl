@@ -14,7 +14,8 @@ struct Light {
    vec3 ambient;
    vec3 diffuse;
    vec3 specular;
-   vec3 position;
+
+   vec3 direction;
 };
 
 /**
@@ -53,7 +54,8 @@ void main() {
    *
    */
    vec3 normalized_normal = normalize(normal_vector);
-   vec3 light_direction = normalize(light.position - fragment_position);
+   // vec3 light_direction = normalize(light.position - fragment_position);
+   vec3 light_direction = normalize(-light.direction);
    float diffuse_strength = max(dot(normalized_normal, light_direction), 0.0f);
    vec3 diffuse_lighting = light.diffuse * 
    			   diffuse_strength * 

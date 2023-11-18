@@ -28,7 +28,7 @@ Texture::Texture(const char *image_path, GLenum texture_type, GLenum slot)
     glTexParameteri(texture_type_, GL_TEXTURE_MAG_FILTER,
                     GL_LINEAR_MIPMAP_LINEAR);
 
-    unsigned int format;
+    GLenum format;
     switch (number_of_color_channels) {
     case 3: {
       format = GL_RGB;

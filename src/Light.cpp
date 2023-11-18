@@ -2,10 +2,10 @@
 
 Light::Light(std::string_view uniform_name, glm::vec3 ambient_color,
              glm::vec3 diffuse_color, glm::vec3 specular_color,
-             glm::vec3 position) noexcept
+             glm::vec3 direction, glm::vec3 position) noexcept
     : uniform_name_(uniform_name), diffuse_color_(diffuse_color),
       ambient_color_(ambient_color), specular_color_(specular_color),
-      position_(position) {}
+      direction_(direction), position_(position) {}
 
 auto Light::setUniformName(const std::string_view new_uniform_name) noexcept
     -> void {
@@ -27,6 +27,10 @@ auto Light::setSpecularColor(const glm::vec3 new_specular_color) noexcept
   specular_color_ = new_specular_color;
 }
 
+auto Light::setDirection(const glm::vec3 new_direction) noexcept -> void {
+  direction_ = new_direction;
+}
+
 auto Light::setPosition(const glm::vec3 new_position) noexcept -> void {
   position_ = new_position;
 }
@@ -42,5 +46,7 @@ auto Light::getAmbient() const noexcept -> glm::vec3 { return ambient_color_; }
 auto Light::getSpecular() const noexcept -> glm::vec3 {
   return specular_color_;
 }
+
+auto Light::getDirection() const noexcept -> glm::vec3 { return direction_; }
 
 auto Light::getPosition() const noexcept -> glm::vec3 { return position_; }
