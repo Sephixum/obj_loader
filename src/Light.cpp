@@ -5,13 +5,9 @@
 //              glm::vec3 direction, glm::vec3 position) noexcept
 
 Light::Light(std::string_view uniform_name, glm::vec3 ambient_color,
-             glm::vec3 diffuse_color, glm::vec3 specular_color,
-             glm::vec3 direction, glm::vec3 position, float constant,
-             float linear, float quadratic) noexcept
+             glm::vec3 diffuse_color, glm::vec3 specular_color) noexcept
     : uniform_name_(uniform_name), diffuse_color_(diffuse_color),
-      ambient_color_(ambient_color), specular_color_(specular_color),
-      direction_(direction), position_(position), constant_(constant),
-      linear_(linear), quadratic_(quadratic) {}
+      ambient_color_(ambient_color), specular_color_(specular_color) {}
 
 auto Light::setUniformName(const std::string_view new_uniform_name) noexcept
     -> void {

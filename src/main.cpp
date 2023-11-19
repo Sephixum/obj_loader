@@ -107,8 +107,8 @@ auto main() -> int {
                              std::move(container_specular), 25.0f);
 
   Light instance_light("light", glm::vec3(0.2f, 0.2f, 0.2f),
-                       glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.0f, 1.0f, 1.0f),
-                       glm::vec3(-0.2f, -1.0f, -0.3f));
+                       glm::vec3(0.5f, 0.5f, 0.5f),
+                       glm::vec3(1.0f, 1.0f, 1.0f));
   instance_light.setLinear(0.045f);
   instance_light.setQuadratic(0.0075f);
 
@@ -153,6 +153,7 @@ auto main() -> int {
      */
     model_matrix = glm::mat4(1.0f);
     model_matrix = glm::translate(model_matrix, instance_light.getPosition());
+    model_matrix = glm::scale(model_matrix, glm::vec3(0.5f, 0.5f, 0.5f));
 
     light_cube_shader.activate();
     light_cube_shader.setMat4("model_matrix", model_matrix);
@@ -160,6 +161,8 @@ auto main() -> int {
                               instace_camera.getCameraMatrix());
     light_vao.bind();
     glDrawArrays(GL_TRIANGLES, 0, 36);
+    light_vao.unBind();
+    ShaderProgram::deActivate();
 
     glfwSwapBuffers(window);
     glfwPollEvents();

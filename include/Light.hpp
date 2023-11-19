@@ -17,29 +17,16 @@ private:
   glm::vec3 ambient_color_;
   glm::vec3 specular_color_;
   glm::vec3 direction_;
-  /*
-   * @brief For instance, position is only being used
-   * to determine lights direction and point it
-   * towards the cube which for this test is at
-   * glm::vec3(0.f, 0.f, 0.f).
-   * in the book has been said that it is not
-   * necessary to have a position though we use
-   * it to achieve the same effect as we had in
-   * previous commits.
-   */
-  glm::vec3 position_;
+  glm::vec3 position_ = glm::vec3(0.0f, 2.0f, 2.0f);
 
-  float constant_;
-  float linear_;
-  float quadratic_;
+  float constant_ = 1.0f;
+  ;
+  float linear_ = 0.09f;
+  float quadratic_ = 0.032f;
 
 public:
   explicit Light(std::string_view uniform_name, glm::vec3 ambient_color,
-                 glm::vec3 diffuse_color, glm::vec3 specular_color,
-                 glm::vec3 direction,
-                 glm::vec3 position = glm::vec3(0.0f, 2.0f, 2.0f),
-                 float constant = 1.0f, float linear = 0.09f,
-                 float quadratic = 0.032f) noexcept;
+                 glm::vec3 diffuse_color, glm::vec3 specular_color) noexcept;
 
   auto setUniformName(const std::string_view new_uniform_name) noexcept -> void;
   auto setDiffuseColor(const glm::vec3 new_diffuse_color) noexcept -> void;
