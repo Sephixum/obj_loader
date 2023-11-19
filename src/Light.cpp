@@ -1,11 +1,17 @@
 #include "Light.hpp"
 
+// Light::Light(std::string_view uniform_name, glm::vec3 ambient_color,
+//              glm::vec3 diffuse_color, glm::vec3 specular_color,
+//              glm::vec3 direction, glm::vec3 position) noexcept
+
 Light::Light(std::string_view uniform_name, glm::vec3 ambient_color,
              glm::vec3 diffuse_color, glm::vec3 specular_color,
-             glm::vec3 direction, glm::vec3 position) noexcept
+             glm::vec3 direction, glm::vec3 position, float constant,
+             float linear, float quadratic) noexcept
     : uniform_name_(uniform_name), diffuse_color_(diffuse_color),
       ambient_color_(ambient_color), specular_color_(specular_color),
-      direction_(direction), position_(position) {}
+      direction_(direction), position_(position), constant_(constant),
+      linear_(linear), quadratic_(quadratic) {}
 
 auto Light::setUniformName(const std::string_view new_uniform_name) noexcept
     -> void {
@@ -35,6 +41,18 @@ auto Light::setPosition(const glm::vec3 new_position) noexcept -> void {
   position_ = new_position;
 }
 
+auto Light::setConstant(float new_constant) noexcept -> void {
+  constant_ = new_constant;
+}
+
+auto Light::setLinear(float new_linear) noexcept -> void {
+  linear_ = new_linear;
+}
+
+auto Light::setQuadratic(float new_quadratic) noexcept -> void {
+  quadratic_ = new_quadratic;
+}
+
 auto Light::getUniformName() const noexcept -> std::string {
   return uniform_name_;
 }
@@ -50,3 +68,9 @@ auto Light::getSpecular() const noexcept -> glm::vec3 {
 auto Light::getDirection() const noexcept -> glm::vec3 { return direction_; }
 
 auto Light::getPosition() const noexcept -> glm::vec3 { return position_; }
+
+auto Light::getConstant() const noexcept -> float { return constant_; }
+
+auto Light::getLinear() const noexcept -> float { return linear_; }
+
+auto Light::getQuadratic() const noexcept -> float { return quadratic_; }

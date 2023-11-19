@@ -109,13 +109,15 @@ auto main() -> int {
   Light instance_light("light", glm::vec3(0.2f, 0.2f, 0.2f),
                        glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.0f, 1.0f, 1.0f),
                        glm::vec3(-0.2f, -1.0f, -0.3f));
+  instance_light.setLinear(0.045f);
+  instance_light.setQuadratic(0.0075f);
 
   glClearColor(0 / 255.f, 0 / 255.f, 0 / 255.f, 1.f);
   while (!glfwWindowShouldClose(window)) {
     fn::processInput(window);
 
     instace_camera.update();
-    instance_light.setPosition(glm::vec3(8.f, 3.74f, -12.1f));
+    instance_light.setPosition(fn::getGlfwPosition());
     auto model_matrix = glm::mat4(1.0f);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -128,17 +130,16 @@ auto main() -> int {
     cube_shader.setVec3("camera_position", instace_camera.getCameraPosition());
     cube_shader.setMaterial(instance_material.getUniformName().c_str(),
                             instance_material);
+    cube_shader.setLight(instance_light.getUniformName().c_str(),
+                         instance_light);
     cube_vao.bind();
-    for (const auto &a : cube_positions) {
+    for (unsigned int i = 0; i < cube_positions.size(); ++i) {
       model_matrix = glm::mat4(1.0f);
-      model_matrix = glm::translate(model_matrix, a);
-      auto angle = static_cast<float>(glfwGetTime());
-      model_matrix =
-          glm::rotate(model_matrix, (angle), glm::vec3(1.0f, 0.3f, 0.5f));
+      model_matrix = glm::translate(model_matrix, cube_positions[i]);
+      float angle = 20.0f * i;
+      model_matrix = glm::rotate(model_matrix, glm::radians(angle),
+                                 glm::vec3(1.0f, 0.3f, 0.5f));
       cube_shader.setMat4("model_matrix", model_matrix);
-      instance_light.setDirection(a - instance_light.getPosition());
-      cube_shader.setLight(instance_light.getUniformName().c_str(),
-                           instance_light);
 
       glDrawArrays(GL_TRIANGLES, 0, 36);
     }
@@ -150,24 +151,15 @@ auto main() -> int {
      * the light_cube.
      *
      */
-    model_matrix = glm::mat4(0.1f);
-    model_matrix = glm::scale(model_matrix, glm::vec3(0.3f, 0.3f, 0.3f));
+    model_matrix = glm::mat4(1.0f);
     model_matrix = glm::translate(model_matrix, instance_light.getPosition());
-    // model_matrix = glm::rotate(model_matrix, (float)glfwGetTime(),
-    //                            glm::vec3(1.0f, 1.0f, 1.0f));
 
-    /**
-     * Draw, Binding and unbindings of light_cube.
-     *
-     */
     light_cube_shader.activate();
     light_cube_shader.setMat4("model_matrix", model_matrix);
     light_cube_shader.setMat4("camera_matrix",
                               instace_camera.getCameraMatrix());
     light_vao.bind();
     glDrawArrays(GL_TRIANGLES, 0, 36);
-    light_vao.unBind();
-    ShaderProgram::deActivate();
 
     glfwSwapBuffers(window);
     glfwPollEvents();

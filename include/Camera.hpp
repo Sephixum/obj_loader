@@ -48,7 +48,7 @@ private:
   /**
    * Same as (projection * lookat) but I
    * prefered to pass it as one matrix to
-   * the sahder
+   * the sahder.
    */
   glm::mat4 camera_matrix_ = glm::mat4(1.0f);
 
