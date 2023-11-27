@@ -7,37 +7,11 @@
  */
 #pragma once
 
-#include "globals.hpp"
-
-#include <format>
 #include <glad/glad.h>
-#include <math.h>
-#include <stb_image.h>
-#include <stdexcept>
+#include <string>
 
-class Texture {
-private:
-  auto checkFirstInstantiation_() const noexcept -> void;
-
-  GLuint id_;
-  GLenum texture_type_;
-  GLenum texture_slot_;
-
-  static bool is_first_instance_;
-
-public:
-  Texture(const char *image_path, GLenum texture_type, GLenum slot);
-  Texture(const Texture &other) = delete;
-  Texture(Texture &&other) = default;
-  auto operator=(const Texture &rhs) -> Texture & = delete;
-  auto operator=(Texture &&rhs) -> Texture & = default;
-  ~Texture();
-
-  auto bind() const noexcept -> void;
-  auto unBind() const noexcept -> void;
-  auto activate() const noexcept -> void;
-  auto deActivate() const noexcept -> void;
-
-  [[nodiscard]] auto getId() const noexcept -> GLuint;
-  [[nodiscard]] auto getTextureSlot() const noexcept -> GLuint;
+struct Texture {
+  GLuint id;
+  std::string type;
+  std::string path;
 };

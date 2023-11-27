@@ -150,30 +150,6 @@ auto ShaderProgram::setTextureUnit(const char *name, int unit) const noexcept
   glUniform1i(glGetUniformLocation(id_, name), unit);
 }
 
-auto ShaderProgram::setMaterial(const char *name,
-                                const Material &material) const noexcept
-    -> void {
-  std::string diffuse_component = name;
-  diffuse_component += ".diffuse";
-
-  std::string specular_component = name;
-  specular_component += ".specular";
-
-  std::string shininess = name;
-  shininess += ".shininess";
-
-  auto &material_diffuse_texture = material.getDiffuseTexture();
-  auto &material_specular_texture = material.getSpecularTexture();
-
-  material_diffuse_texture.bind();
-  material_specular_texture.bind();
-
-  setTextureUnit(diffuse_component.c_str(), 0);
-  setTextureUnit(specular_component.c_str(), 1);
-
-  setFloat(shininess.c_str(), material.getShininess());
-}
-
 auto ShaderProgram::setLight(const char *name,
                              const Light &light) const noexcept -> void {
   std::string ambient_component = name;

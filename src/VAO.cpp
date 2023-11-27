@@ -13,9 +13,9 @@ auto VAO::linkVBO(VBO &target_vbo, unsigned int layout,
                   std::size_t offset) const noexcept -> void {
   bind();
   target_vbo.bind();
-  glVertexAttribPointer(layout, number_of_components, type_of_components,
-                        GL_FALSE, stride, (void *)offset);
   glEnableVertexAttribArray(layout);
+  glVertexAttribPointer(layout, number_of_components, type_of_components,
+                        GL_FALSE, stride, reinterpret_cast<void *>(offset));
   target_vbo.unBind();
   unBind();
 }

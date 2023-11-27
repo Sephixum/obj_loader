@@ -27,8 +27,10 @@ target_sources(
           src/Texture.cpp
           src/Camera.cpp
           src/Material.cpp
-	  src/Light.cpp)
-target_link_libraries(output PRIVATE glfw glad)
+          src/Light.cpp
+          src/Mesh.cpp
+          src/Model.cpp)
+target_link_libraries(output PRIVATE glfw glad assimp)
 target_include_directories(output PRIVATE include/ deps/stb_image/)
 
 add_custom_command(

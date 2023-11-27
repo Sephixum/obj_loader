@@ -85,7 +85,8 @@ void main() {
    float distance = length(light.position - fragment_position);
    // float attenuation = 
    // 	1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
-   float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+   float attenuation = 
+   	1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
    
    ambient_lighting *= attenuation;
    diffuse_lighting *= attenuation;

@@ -4,15 +4,10 @@
 #include "ShaderProgram.hpp"
 #include "Texture.hpp"
 #include "VAO.hpp"
+#include "Vertex.hpp"
 
 #include <glm/glm.hpp>
 #include <vector>
-
-struct Vertex {
-  glm::vec3 Position;
-  glm::vec3 Normal;
-  glm::vec2 TexCoords;
-};
 
 class Mesh {
 public:
@@ -21,13 +16,12 @@ public:
   auto draw(ShaderProgram &shader) -> void;
 
 private:
+  auto setupMesh() -> void;
+
   VAO vao_;
   VBO vbo_;
   EBO ebo_;
   std::vector<Vertex> vertices_;
   std::vector<unsigned int> indices_;
   std::vector<Texture> textures_;
-
-
-  auto setupMesh() -> void;
 };

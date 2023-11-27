@@ -1,5 +1,7 @@
 #include "EBO.hpp"
 
+EBO::EBO() { glGenBuffers(1, &id_); }
+
 EBO::EBO(signed long int size, unsigned int *indices) noexcept {
   glGenBuffers(1, &id_);
   bind();
@@ -16,3 +18,10 @@ auto EBO::unBind() const noexcept -> void {
 }
 
 auto EBO::deleteBuffer() const noexcept -> void { glDeleteBuffers(1, &id_); }
+
+auto EBO::setBufferData(signed long int size,
+                        unsigned int *indices) const noexcept -> void {
+  bind();
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
+  unBind();
+}

@@ -7,6 +7,7 @@
  */
 #pragma once
 
+#include "Vertex.hpp"
 #include <glad/glad.h>
 
 class VBO {
@@ -20,6 +21,6 @@ public:
   auto bind() const noexcept -> void;
   auto unBind() const noexcept -> void;
   auto deleteBuffer() const noexcept -> void;
-  auto setBufferData(signed long int size, float *vertices) const noexcept
+  auto setBufferData(signed long int size, Vertex *vertices) const noexcept
       -> void;
 };
