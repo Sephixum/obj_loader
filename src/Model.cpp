@@ -1,10 +1,10 @@
 #include "Model.hpp"
 #include "stb_image.h"
-
 #include <assimp/Importer.hpp>
 #include <assimp/material.h>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
+#include <filesystem>
 #include <format>
 
 auto Model::loadTexture_(const char *path, const char *directory) -> GLuint {
@@ -19,7 +19,7 @@ auto Model::loadTexture_(const char *path, const char *directory) -> GLuint {
 
   if (!data) {
     throw std::runtime_error(
-        std::format("[MODEL]-> [TEXTURE] cannot load {}", full_path));
+        std::format("[MODEL] texture cannot load {}.", full_path));
   }
 
   GLenum format;
@@ -72,7 +72,8 @@ auto Model::loadModel(std::string path) -> void {
     std::cout << "[ASSIMP] ERROR : " << importer.GetErrorString() << std::endl;
     return;
   }
-  directory_ = path.substr(0, path.find_last_of('/'));
+  std::filesystem::path filesystem_path = path;
+  directory_ = filesystem_path.remove_filename().string();
   processNode(scene->mRootNode, scene);
 }
 
@@ -97,20 +98,28 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
 
     // Process vertex positions
     auto position = mesh->mVertices[i];
-    vertex.Position = glm::vec3(position.x, position.y, position.z);
+    vertex.position = glm::vec3(position.x, position.y, position.z);
 
     // Process vertex normals
     if (mesh->HasNormals()) {
       auto normal = mesh->mNormals[i];
-      vertex.Normal = glm::vec3(normal.x, normal.y, normal.z);
+      vertex.normal = glm::vec3(normal.x, normal.y, normal.z);
+    }
+
+    // Process vertex color
+    if (mesh->HasVertexColors(0)) {
+      auto color = mesh->mColors[i];
+      vertex.color = glm::vec3(color->r, color->g, color->b);
+    } else {
+      vertex.color = glm::vec3(0.5f, 0.5f, 0.5f);
     }
 
     // Process vertex TexCoords
     if (mesh->HasTextureCoords(0)) {
-      vertex.TexCoords =
+      vertex.tex_coords =
           glm::vec2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
     } else {
-      vertex.TexCoords = glm::vec2(0.0f, 0.0f);
+      vertex.tex_coords = glm::vec2(0.0f, 0.0f);
     }
 
     vertices.push_back(vertex);
@@ -125,14 +134,14 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
   }
 
   // Process material
-  if (mesh->mMaterialIndex >= 0) {
+  if (mesh->mMaterialIndex > 0) {
     auto material = scene->mMaterials[mesh->mMaterialIndex];
-    std::vector<Texture> diffuse_maps = loadMaterialTextures(
-        material, aiTextureType_DIFFUSE, "texture_diffuse");
+    std::vector<Texture> diffuse_maps =
+        loadMaterialTextures(material, aiTextureType_DIFFUSE, "diffuse");
     textures.insert(textures.end(), diffuse_maps.begin(), diffuse_maps.end());
 
-    std::vector<Texture> specular_maps = loadMaterialTextures(
-        material, aiTextureType_SPECULAR, "texture_specular");
+    std::vector<Texture> specular_maps =
+        loadMaterialTextures(material, aiTextureType_SPECULAR, "specular");
     textures.insert(textures.end(), specular_maps.begin(), specular_maps.end());
   }
 
@@ -148,19 +157,21 @@ auto Model::loadMaterialTextures(aiMaterial *material, aiTextureType type,
     material->GetTexture(type, i, &str);
     bool skip = false;
     for (unsigned int j = 0; j < loaded_textures_.size(); ++j) {
-      if (std::strcmp(loaded_textures_[j].path.data(), str.C_Str()) == 0) {
+      if (loaded_textures_[j].getFileName() == str.C_Str()) {
         textures.push_back(loaded_textures_[j]);
         skip = true;
         break;
       }
     }
     if (!skip) {
-      Texture texture;
-      texture.id = loadTexture_(str.C_Str(), directory_.c_str());
-      texture.type = type_name;
-      texture.path = str.C_Str();
+      std::string full_path = directory_ + "/" + std::string(str.C_Str());
+      Texture texture(full_path, type_name);
+      texture.setFileName(str.C_Str());
       textures.push_back(texture);
       loaded_textures_.push_back(texture);
+      std::puts(std::format("[MODEL] texture {} id {} loaded.",
+                            texture.getFileName(), texture.getId())
+                    .c_str());
     }
   }
   return textures;

@@ -1,6 +1,8 @@
 #include "Utils.hpp"
 
-auto fn::createGlfwWindow()  -> GLFWwindow * {
+#include <stb_image.h>
+
+auto fn::createGlfwWindow() -> GLFWwindow * {
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -18,7 +20,7 @@ auto fn::createGlfwWindow()  -> GLFWwindow * {
   return new_window;
 }
 
-auto fn::loadOpenGLFunctions()  -> void {
+auto fn::loadOpenGLFunctions() -> void {
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     throw std::runtime_error(
         "[GLFW] OpenGL functions pointers failed to load.");
@@ -49,12 +51,13 @@ auto fn::initGlfwAndGlad() noexcept -> GLFWwindow * {
       });
 
   glEnable(GL_DEPTH_TEST);
+  stbi_set_flip_vertically_on_load(true);
 
   return window;
 }
 
 auto fn::getGlfwPosition() noexcept -> glm::vec3 {
-    auto x = 7.0f * std::cos(static_cast<float>(glfwGetTime()));
-    auto z = 7.0f * std::sin(static_cast<float>(glfwGetTime()));
-    return glm::vec3(x, 4.0f, z);
+  auto x = 7.0f * std::cos(static_cast<float>(glfwGetTime()));
+  auto z = 7.0f * std::sin(static_cast<float>(glfwGetTime()));
+  return glm::vec3(x, 4.0f, z);
 }

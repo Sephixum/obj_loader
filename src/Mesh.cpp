@@ -1,5 +1,6 @@
 #include "Mesh.hpp"
-#include <cstddef>
+
+#include <iostream>
 #include <string>
 
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices,
@@ -9,24 +10,22 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices,
 }
 
 auto Mesh::draw(ShaderProgram &shader) -> void {
-  unsigned int diffuseNr = 1;
-  unsigned int specularNr = 1;
+  unsigned int diffuseNr = 0;
+  unsigned int specularNr = 0;
   for (unsigned int i = 0; i < textures_.size(); ++i) {
-    glActiveTexture(GL_TEXTURE0 + i);
 
     std::string unit_number;
-    std::string texture_type = textures_[i].type;
-    if (texture_type == "texture_diffuse") {
+    std::string texture_type = textures_[i].getType();
+    if (texture_type == "diffuse") {
       unit_number = std::to_string(++diffuseNr);
-    } else if (texture_type == "texture_specular") {
+    } else if (texture_type == "specular") {
       unit_number = std::to_string(++specularNr);
     }
 
-    shader.setTextureUnit(("material." + texture_type + unit_number).c_str(),
-                          i);
-    glBindTexture(GL_TEXTURE_2D, textures_[i].id);
+    shader.setTextureUnit((texture_type + unit_number).c_str(), i);
+    textures_[i].activate(GL_TEXTURE0 + i);
+    textures_[i].bind();
   }
-  glActiveTexture(GL_TEXTURE0);
 
   // Draw mesh
   vao_.bind();
@@ -45,10 +44,12 @@ auto Mesh::setupMesh() -> void {
   // Vertex positions
   vao_.linkVBO(vbo_, 0, 3, GL_FLOAT, sizeof(Vertex), 0);
   // Vertex normals
-  vao_.linkVBO(vbo_, 1, 3, GL_FLOAT, sizeof(Vertex), offsetof(Vertex, Normal));
+  vao_.linkVBO(vbo_, 1, 3, GL_FLOAT, sizeof(Vertex), offsetof(Vertex, normal));
+  // Vertex colors
+  vao_.linkVBO(vbo_, 2, 3, GL_FLOAT, sizeof(Vertex), offsetof(Vertex, color));
   // Vertex texture coords
-  vao_.linkVBO(vbo_, 2, 2, GL_FLOAT, sizeof(Vertex),
-               offsetof(Vertex, TexCoords));
+  vao_.linkVBO(vbo_, 3, 2, GL_FLOAT, sizeof(Vertex),
+               offsetof(Vertex, tex_coords));
 
   vao_.unBind();
 }

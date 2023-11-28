@@ -1,11 +1,19 @@
 #version 330 core
 out vec4 FragColor;
 
-in vec2 TexCoords;
+in vec3 vtof_Color;
+in vec2 vtof_TexCoords;
 
-uniform sampler2D texture_diffuse1;
+uniform sampler2D diffuse1;
+uniform sampler2D specular1;
 
 void main()
 {    
-    FragColor = texture(texture_diffuse1, TexCoords);
+    // FragColor = texture(diffuse1, vtof_TexCoords);
+    // FragColor = texture(specular1, vtof_TexCoords);
+    FragColor = mix(
+    	texture(diffuse1, vtof_TexCoords),
+    	texture(specular1, vtof_TexCoords), 
+	0.0f);
+	// FragColor = vec4(vtof_Color, 1.0f);
 }

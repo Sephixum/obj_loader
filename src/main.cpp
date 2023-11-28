@@ -2,23 +2,12 @@
 #include "Model.hpp"
 #include "Utils.hpp"
 #include "globals.hpp"
-#include "stb_image.h"
 
 #include <GLFW/glfw3.h>
-#include <format>
 #include <glad/glad.h>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/quaternion_geometric.hpp>
-#include <glm/matrix.hpp>
-#include <glm/vec3.hpp>
-#include <iostream>
-#include <stdexcept>
-#include <vector>
 
 auto main() -> int {
   auto window = fn::initGlfwAndGlad();
-
-  stbi_set_flip_vertically_on_load(true);
 
   ShaderProgram model_shader(
       "resources/shaders/model_shaders/model_vertex.glsl",
@@ -33,6 +22,7 @@ auto main() -> int {
 
   Model back_pack("resources/models/backpack/backpack.obj");
   Model cube("resources/models/cube/Cube obj.obj");
+  Model iron_man("resources/models/IronMan/IronMan.obj");
 
   glClearColor(0 / 255.f, 0 / 255.f, 0 / 255.f, 1.f);
   while (!glfwWindowShouldClose(window)) {
@@ -47,12 +37,15 @@ auto main() -> int {
      */
     auto model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-    model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+    // model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+    model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 
     model_shader.activate();
     model_shader.setMat4("camera", instace_camera.getCameraMatrix());
     model_shader.setMat4("model", model);
     back_pack.draw(model_shader);
+    // iron_man.draw(model_shader);
+    model_shader.deActivate();
 
     float radius = 5;
     float x = radius * std::cos(glfwGetTime());
@@ -62,8 +55,8 @@ auto main() -> int {
     model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
 
     light_cube_shader.activate();
-    model_shader.setMat4("camera", instace_camera.getCameraMatrix());
-    model_shader.setMat4("model", model);
+    light_cube_shader.setMat4("camera", instace_camera.getCameraMatrix());
+    light_cube_shader.setMat4("model", model);
     cube.draw(light_cube_shader);
     light_cube_shader.deActivate();
 
