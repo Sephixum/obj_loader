@@ -22,7 +22,8 @@ auto main() -> int {
 
   Model back_pack("resources/models/backpack/backpack.obj");
   Model cube("resources/models/cube/Cube obj.obj");
-  Model iron_man("resources/models/IronMan/IronMan.obj");
+  // Model iron_man("resources/models/IronMan/IronMan.obj");
+  // Model iron_man("resources/models/nigger/nigger.obj");
 
   glClearColor(0 / 255.f, 0 / 255.f, 0 / 255.f, 1.f);
   while (!glfwWindowShouldClose(window)) {
@@ -44,7 +45,6 @@ auto main() -> int {
     model_shader.setMat4("camera", instace_camera.getCameraMatrix());
     model_shader.setMat4("model", model);
     back_pack.draw(model_shader);
-    // iron_man.draw(model_shader);
     model_shader.deActivate();
 
     float radius = 5;

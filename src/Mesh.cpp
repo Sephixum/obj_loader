@@ -1,4 +1,5 @@
 #include "Mesh.hpp"
+#include "Texture.hpp"
 
 #include <iostream>
 #include <string>
@@ -23,8 +24,7 @@ auto Mesh::draw(ShaderProgram &shader) -> void {
     }
 
     shader.setTextureUnit((texture_type + unit_number).c_str(), i);
-    textures_[i].activate(GL_TEXTURE0 + i);
-    textures_[i].bind();
+    textures_[i].bind(GL_TEXTURE0 + i);
   }
 
   // Draw mesh

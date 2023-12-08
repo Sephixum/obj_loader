@@ -9,6 +9,7 @@
 
 #include "glad/glad.h"
 #include "globals.hpp"
+#include "Texture.hpp"
 
 #include <GLFW/glfw3.h>
 #include <cmath>

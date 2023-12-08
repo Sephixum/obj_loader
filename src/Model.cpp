@@ -138,14 +138,18 @@ auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
     auto material = scene->mMaterials[mesh->mMaterialIndex];
     std::vector<Texture> diffuse_maps =
         loadMaterialTextures(material, aiTextureType_DIFFUSE, "diffuse");
-    textures.insert(textures.end(), diffuse_maps.begin(), diffuse_maps.end());
+    for (const auto &t : diffuse_maps) {
+      textures.push_back(std::move(t));
+    }
 
     std::vector<Texture> specular_maps =
         loadMaterialTextures(material, aiTextureType_SPECULAR, "specular");
-    textures.insert(textures.end(), specular_maps.begin(), specular_maps.end());
+    for (const auto &t : specular_maps) {
+      textures.push_back(std::move(t));
+    }
   }
 
-  return Mesh(vertices, indices, textures);
+  return Mesh(vertices, indices, std::move(textures));
 }
 
 auto Model::loadMaterialTextures(aiMaterial *material, aiTextureType type,
@@ -164,9 +168,8 @@ auto Model::loadMaterialTextures(aiMaterial *material, aiTextureType type,
       }
     }
     if (!skip) {
-      std::string full_path = directory_ + "/" + std::string(str.C_Str());
+      std::string full_path = directory_ + std::string(str.C_Str());
       Texture texture(full_path, type_name);
-      texture.setFileName(str.C_Str());
       textures.push_back(texture);
       loaded_textures_.push_back(texture);
       std::puts(std::format("[MODEL] texture {} id {} loaded.",

@@ -11,9 +11,9 @@ void main()
 {    
     // FragColor = texture(diffuse1, vtof_TexCoords);
     // FragColor = texture(specular1, vtof_TexCoords);
+    // FragColor = vec4(vtof_Color, 1.0f);
     FragColor = mix(
-    	texture(diffuse1, vtof_TexCoords),
-    	texture(specular1, vtof_TexCoords), 
-	0.0f);
-	// FragColor = vec4(vtof_Color, 1.0f);
+      texture(diffuse1, vtof_TexCoords),
+      texture(specular1, vtof_TexCoords), 
+      0.3f);
 }
