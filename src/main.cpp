@@ -44,8 +44,8 @@ auto main() -> int {
     model_shader.activate();
     model_shader.setMat4("camera", instace_camera.getCameraMatrix());
     model_shader.setMat4("model", model);
-    back_pack.draw(model_shader);
     model_shader.deActivate();
+    back_pack.draw(model_shader);
 
     float radius = 5;
     float x = radius * std::cos(glfwGetTime());
@@ -57,8 +57,8 @@ auto main() -> int {
     light_cube_shader.activate();
     light_cube_shader.setMat4("camera", instace_camera.getCameraMatrix());
     light_cube_shader.setMat4("model", model);
-    cube.draw(light_cube_shader);
     light_cube_shader.deActivate();
+    cube.draw(light_cube_shader);
 
     glfwSwapBuffers(window);
     glfwPollEvents();

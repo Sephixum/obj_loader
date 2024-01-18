@@ -1,19 +1,18 @@
 #include "Mesh.hpp"
 #include "Texture.hpp"
+#include <Vertex.hpp>
 
-#include <iostream>
 #include <string>
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices,
-           std::vector<Texture> textures)
+Mesh::Mesh(Vertices vertices, Indices indices, std::vector<Texture> textures)
     : vertices_(vertices), indices_(indices), textures_(std::move(textures)) {
-  setupMesh();
+  setupMesh_();
 }
 
 auto Mesh::draw(ShaderProgram &shader) -> void {
-  unsigned int diffuseNr = 0;
-  unsigned int specularNr = 0;
-  for (unsigned int i = 0; i < textures_.size(); ++i) {
+  uint diffuseNr = 0;
+  uint specularNr = 0;
+  for (uint i = 0; i < textures_.size(); ++i) {
 
     std::string unit_number;
     std::string texture_type = textures_[i].getType();
@@ -27,19 +26,20 @@ auto Mesh::draw(ShaderProgram &shader) -> void {
     textures_[i].bind(GL_TEXTURE0 + i);
   }
 
-  // Draw mesh
   vao_.bind();
   ebo_.bind();
+
   glDrawElements(GL_TRIANGLES, indices_.size(), GL_UNSIGNED_INT, 0);
+
   ebo_.unBind();
   vao_.unBind();
 }
 
-auto Mesh::setupMesh() -> void {
+auto Mesh::setupMesh_() -> void {
   vao_.bind();
 
-  vbo_.setBufferData(vertices_.size() * sizeof(Vertex), vertices_.data());
-  ebo_.setBufferData(indices_.size() * sizeof(unsigned int), indices_.data());
+  vbo_.setBufferData(vertices_);
+  ebo_.setBufferData(indices_);
 
   // Vertex positions
   vao_.linkVBO(vbo_, 0, 3, GL_FLOAT, sizeof(Vertex), 0);

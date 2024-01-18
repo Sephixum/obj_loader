@@ -3,12 +3,14 @@
  *
  * @brief This class stores and id for an
  * OpenGL vertex buffer object.
+ * note that it is generic and will bind
+ * almost any data type.
  *
  */
 #pragma once
 
-#include "Vertex.hpp"
 #include <glad/glad.h>
+#include <vector>
 
 class VBO {
 private:
@@ -16,11 +18,16 @@ private:
 
 public:
   VBO();
-  VBO(signed long int size, float *vertices) noexcept;
 
   auto bind() const noexcept -> void;
   auto unBind() const noexcept -> void;
   auto deleteBuffer() const noexcept -> void;
-  auto setBufferData(signed long int size, Vertex *vertices) const noexcept
-      -> void;
+
+  template <typename Tp>
+  auto setBufferData(const std::vector<Tp> &data) const noexcept -> void {
+    bind();
+    glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(Tp), data.data(),
+                 GL_STATIC_DRAW);
+    unBind();
+  }
 };

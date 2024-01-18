@@ -4,17 +4,14 @@
 #include "ShaderProgram.hpp"
 
 #include <assimp/scene.h>
-#include <iostream>
 #include <string>
 #include <vector>
 
 class Model {
 private:
-  std::vector<Mesh> meshes_;
+  Meshes meshes_;
   std::vector<Texture> loaded_textures_;
   std::string directory_;
-
-  auto loadTexture_(const char *path, const char *directory) -> GLuint;
 
 public:
   Model(const char *path);

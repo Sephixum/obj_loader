@@ -1,65 +1,22 @@
 #include "Model.hpp"
 #include "stb_image.h"
+
 #include <assimp/Importer.hpp>
 #include <assimp/material.h>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 #include <filesystem>
 #include <format>
-
-auto Model::loadTexture_(const char *path, const char *directory) -> GLuint {
-  auto full_path = std::string(directory) + "/" + std::string(path);
-
-  GLuint new_texture;
-  glGenTextures(1, &new_texture);
-
-  int image_width, image_height, channel_numbers;
-  auto data = stbi_load(full_path.c_str(), &image_width, &image_height,
-                        &channel_numbers, 0);
-
-  if (!data) {
-    throw std::runtime_error(
-        std::format("[MODEL] texture cannot load {}.", full_path));
-  }
-
-  GLenum format;
-  switch (channel_numbers) {
-  case 1:
-    format = GL_RED;
-    break;
-  case 3:
-    format = GL_RGB;
-    break;
-  case 4:
-    format = GL_RGBA;
-    break;
-  }
-
-  glBindTexture(GL_TEXTURE_2D, new_texture);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, image_width, image_height, 0, format,
-               GL_UNSIGNED_BYTE, data);
-  glGenerateMipmap(GL_TEXTURE_2D);
-
-  // Set texture parameters
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-                  GL_LINEAR_MIPMAP_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-  // Unbind the texture
-  glBindTexture(GL_TEXTURE_2D, 0);
-  stbi_image_free(data);
-
-  return new_texture;
-}
+#include <iostream>
 
 Model::Model(const char *path) { loadModel(path); }
 
 auto Model::draw(ShaderProgram &shader) -> void {
+  shader.activate();
   for (unsigned int i = 0; i < meshes_.size(); ++i) {
     meshes_[i].draw(shader);
   }
+  shader.deActivate();
 }
 
 auto Model::loadModel(std::string path) -> void {
@@ -89,8 +46,8 @@ auto Model::processNode(aiNode *node, const aiScene *scene) -> void {
 }
 
 auto Model::processMesh(aiMesh *mesh, const aiScene *scene) -> Mesh {
-  std::vector<Vertex> vertices;
-  std::vector<unsigned int> indices;
+  Vertices vertices;
+  Indices indices;
   std::vector<Texture> textures;
 
   for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
