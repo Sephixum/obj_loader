@@ -1,4 +1,5 @@
 #include "Model.hpp"
+#include "globals.hpp"
 #include "stb_image.h"
 
 #include <assimp/Importer.hpp>
@@ -7,7 +8,6 @@
 #include <assimp/scene.h>
 #include <filesystem>
 #include <format>
-#include <iostream>
 
 Model::Model(const char *path) { loadModel(path); }
 
@@ -26,7 +26,7 @@ auto Model::loadModel(std::string path) -> void {
 
   if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE ||
       !scene->mRootNode) {
-    std::cout << "[ASSIMP] ERROR : " << importer.GetErrorString() << std::endl;
+    ERROR_LOG(std::format("[ASSIMP] {}", importer.GetErrorString()));
     return;
   }
   std::filesystem::path filesystem_path = path;
@@ -129,9 +129,8 @@ auto Model::loadMaterialTextures(aiMaterial *material, aiTextureType type,
       Texture texture(full_path, type_name);
       textures.push_back(texture);
       loaded_textures_.push_back(texture);
-      std::puts(std::format("[MODEL] texture {} id {} loaded.",
-                            texture.getFileName(), texture.getId())
-                    .c_str());
+      MSG_LOG(std::format("texture {} id {} loaded.",
+                          texture.getFileName(), texture.getId()));
     }
   }
   return textures;

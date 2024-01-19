@@ -12,7 +12,7 @@
  */
 #pragma once
 
-#include "ShaderProgram.hpp"
+#include <glad/glad.h>
 
 #include <GLFW/glfw3.h>
 #include <glm/ext.hpp>
@@ -22,6 +22,7 @@ class Camera {
 private:
   auto keyboardInputProccess_() noexcept -> void;
   auto mouseInputProccess_() noexcept -> void;
+  auto updateMatrix_() noexcept -> glm::mat4;
 
   static float current_time_;
   static float delta_time_;
@@ -41,16 +42,16 @@ private:
   float pitch_ = 0.0f;
   float yaw_ = -90.f;
 
-  glm::vec3 camera_up_ = glm::vec3(0.0f, 1.0f, 0.0f);
-  glm::vec3 camera_position_ = glm::vec3(0.f, 0.f, 0.f);
-  glm::vec3 camera_orientation_ = glm::vec3(0.0f, 0.0f, -1.0f);
+  glm::vec3 up_ = glm::vec3(0.0f, 1.0f, 0.0f);
+  glm::vec3 position_ = glm::vec3(0.f, 0.f, 0.f);
+  glm::vec3 orientation_ = glm::vec3(0.0f, 0.0f, -1.0f);
 
   /**
    * Same as (projection * lookat) but I
    * prefered to pass it as one matrix to
    * the sahder.
    */
-  glm::mat4 camera_matrix_ = glm::mat4(1.0f);
+  glm::mat4 matrix_ = glm::mat4(1.0f);
 
 public:
   /**
@@ -65,7 +66,6 @@ public:
                   GLFWwindow *target_window, float fov = 66.f,
                   float near_plane = 0.1f, float far_plane = 100.f) noexcept;
 
-  auto updateCameraMatrix() noexcept -> glm::mat4;
   auto update() noexcept -> void;
 
   auto setFov(float fov) noexcept -> void;
@@ -78,9 +78,7 @@ public:
    * @param shader      ShaderProgram object which has to be passed by
    * reference.
    */
-  auto setCameraMatrixToShader(const ShaderProgram &shader,
-                               const char *uniform_name) const noexcept -> void;
-  auto setCameraPosition(glm::vec3 new_position) noexcept -> void;
+  auto setPosition(glm::vec3 new_position) noexcept -> void;
 
   [[nodiscard]] auto getCameraMatrix() const noexcept -> glm::mat4;
   [[nodiscard]] auto getCameraPosition() const noexcept -> glm::vec3;

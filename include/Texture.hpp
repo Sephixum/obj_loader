@@ -53,6 +53,6 @@ public:
   auto getId() const noexcept -> GLuint;
   auto getImageInfo() const noexcept -> ImageData;
 
-  static auto deepCopyTexture(Texture &target, Texture &destination) noexcept
+  static auto deepCopy(Texture &target, Texture &destination) noexcept
       -> void;
 };

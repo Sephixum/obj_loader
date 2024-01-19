@@ -14,6 +14,12 @@ public:
   Mesh(Vertices vertices, Indices indices, std::vector<Texture> textures);
   auto draw(ShaderProgram &shader) -> void;
 
+  auto setVertices(const Vertices &vertices) -> void;
+  auto setIndices(const Vertices &vertices) -> void;
+
+  [[nodiscard]] auto getVertices() -> Vertices &;
+  [[nodiscard]] auto getIndices() -> Indices &;
+
 private:
   auto setupMesh_() -> void;
 

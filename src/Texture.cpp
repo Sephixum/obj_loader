@@ -1,9 +1,8 @@
 #include "Texture.hpp"
+#include "globals.hpp"
 
-#include <cstdio>
 #include <filesystem>
 #include <format>
-#include <iostream>
 #include <memory>
 #include <stb_image.h>
 #include <stdexcept>
@@ -50,8 +49,7 @@ Texture::Texture() {
 
   glBindTexture(kTexture_type, 0);
 
-  std::puts(
-      std::format("[TEXTURE] default constructed with id {}", id_).c_str());
+  MSG_LOG(std::format("default constructed with id {}", id_).c_str());
 }
 
 Texture::Texture(std::string image_path, std::string type_name)
@@ -61,9 +59,9 @@ Texture::Texture(std::string image_path, std::string type_name)
                               &channel_numbers, 0);
 
   if (!image_data) {
-    throw std::runtime_error(
-        std::format("[TEXTURE] cannot load {}.\n REASON : ", image_path.c_str(),
-                    stbi_failure_reason()));
+    MSG_LOG(std::format("cannot load {}.\n REASON : ", image_path.c_str(),
+                        stbi_failure_reason()));
+    throw std::runtime_error("Error! check logs.");
   }
 
   image_info_.width = image_width;
@@ -77,9 +75,8 @@ Texture::Texture(std::string image_path, std::string type_name)
 
   stbi_image_free(image_data);
 
-  std::puts(std::format("[TEXTURE] \"{}\" loaded with success with id {}.",
-                        image_path, id_)
-                .c_str());
+  MSG_LOG(
+      std::format("\"{}\" loaded with success with id {}.", image_path, id_));
 }
 
 Texture::~Texture() {}
@@ -119,8 +116,7 @@ auto Texture::getId() const noexcept -> GLuint { return id_; }
 
 auto Texture::getImageInfo() const noexcept -> ImageData { return image_info_; }
 
-auto Texture::deepCopyTexture(Texture &target, Texture &destination) noexcept
-    -> void {
+auto Texture::deepCopy(Texture &target, Texture &destination) noexcept -> void {
   auto target_image_info = target.getImageInfo();
 
   GLenum format;
@@ -154,7 +150,7 @@ auto Texture::deepCopyTexture(Texture &target, Texture &destination) noexcept
   glGenerateMipmap(kTexture_type);
   destination.unBind();
 
-  std::puts(
+  MSG_LOG(
       std::format("[TEXTURE] deep copied texture with id {}", destination.id_)
           .c_str());
 }

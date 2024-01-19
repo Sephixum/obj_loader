@@ -8,7 +8,6 @@
  */
 #pragma once
 
-#include "EBO.hpp"
 #include "globals.hpp"
 
 #include <glad/glad.h>
